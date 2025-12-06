@@ -1,6 +1,17 @@
 import { UserRole } from "@/lib/auth-utils";
 import { IAdmin } from "./admin.interface";
 
+export interface IUser {
+    id: string;
+    name?: string;
+    profilePhoto?: string;
+    contactNumber?: string;
+    address?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
 export interface UserInfo {
     id: string;
     name?: string;
@@ -28,4 +39,5 @@ export interface UserInfo {
     updatedAt: string;
 
     admin?: IAdmin;
+    user?: IUser;
 }
