@@ -108,7 +108,7 @@ export const adminNavItems: NavSection[] = [
         items: [
             {
                 title: "All Users",
-                href: "/admin/dashboard/users",
+                href: "/admin/dashboard/user-management",
                 icon: "Users",
                 roles: ["ADMIN"],
             },
@@ -125,7 +125,7 @@ export const adminNavItems: NavSection[] = [
         items: [
             {
                 title: "All Travel Plans",
-                href: "/admin/dashboard/travel-plans",
+                href: "/admin/dashboard/travel-management",
                 icon: "MapPin",
                 roles: ["ADMIN"],
             },

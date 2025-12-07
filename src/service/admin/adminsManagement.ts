@@ -190,7 +190,7 @@ export async function softDeleteAdmin(id: string) {
  */
 export async function deleteAdmin(id: string) {
     try {
-        const response = await serverFetch.delete(`/admin/${id}`)
+        const response = await serverFetch.delete(`/admin/hard/${id}`)
         const result = await response.json();
         return result;
     } catch (error: any) {

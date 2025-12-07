@@ -117,6 +117,10 @@ const ClearFiltersButton = ({
                 params.set(param, value);
             }
         });
+        // console.log("👉 Before Clear:", searchParams.toString());
+        // console.log("👉 Preserving:", preserveParams);
+        // console.log("👉 After Clear -> redirecting to:", params.toString());
+
 
         startTransition(() => {
             // If no params to preserve, just go to base path
@@ -125,6 +129,7 @@ const ClearFiltersButton = ({
             } else {
                 router.push(window.location.pathname);
             }
+            //  router.refresh();
         });
 
         // Run after clear handler
