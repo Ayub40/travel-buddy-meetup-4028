@@ -17,7 +17,8 @@ export const createTravelPlanZodSchema = z.object({
     budget: z.number().optional(),
     description: z.string().optional(),
     travelType: z.enum([TravelType.SOLO, TravelType.GROUP, TravelType.BACKPACK]),
-    photos: z.array(z.string()).optional(),
+    // photos: z.array(z.string()).optional(),
+    photos: z.array(z.instanceof(File).refine((file) => file.size > 0, "Profile photo is required")).optional(),
     visibility: z.boolean().optional(),
 });
 

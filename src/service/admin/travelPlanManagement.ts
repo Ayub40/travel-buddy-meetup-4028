@@ -1,9 +1,15 @@
+"use server";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /** ==================== ADMIN API FUNCTIONS ==================== */
 
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
-import { createTravelPlanZodSchema, updateTravelPlanZodSchema } from "@/zod/travel.validation";
+import { createTravelPlanZodSchema, TravelType, updateTravelPlanZodSchema } from "@/zod/travel.validation";
+import { revalidateTag } from "next/cache";
+
+// console.log("serverFetch:", serverFetch)
+
 
 /** GET ALL TRAVEL PLANS (Admin view) */
 export async function getAllTravelPlans(queryString?: string) {
@@ -33,9 +39,10 @@ export async function getTravelPlanById(id: string) {
     }
 }
 
-/** CREATE TRAVEL PLAN (Admin view) */
-export async function createTravelPlan(formData: FormData) {
-    const validationPayload: any = {
+/** CREATE TRAVEL PLAN */
+export async function createTravelPlanAdmin(_prevState: any, formData: FormData) {
+    // ১️⃣ Build validation payload
+    const validationPayload = {
         title: formData.get("title") as string,
         destination: formData.get("destination") as string,
         country: formData.get("country") as string,
@@ -43,75 +50,138 @@ export async function createTravelPlan(formData: FormData) {
         endDate: formData.get("endDate") as string,
         budget: formData.get("budget") ? Number(formData.get("budget")) : undefined,
         description: formData.get("description") as string,
-        travelType: formData.get("travelType") as string,
-        photos: formData.getAll("photos") as string[],
+        travelType: (formData.get("travelType") as string) || TravelType.SOLO,
         visibility: formData.get("visibility") === "true",
+        photos: formData.getAll("photos") as File[],
     };
 
-    const validation = zodValidator(validationPayload, createTravelPlanZodSchema);
+    // ২️⃣ Validate with Zod
+    const validatedPayload = zodValidator(validationPayload, createTravelPlanZodSchema);
 
-    if (!validation.success && validation.errors) {
+    if (!validatedPayload.success && validatedPayload.errors) {
         return {
             success: false,
             message: "Validation failed",
             formData: validationPayload,
-            errors: validation.errors,
+            errors: validatedPayload.errors,
         };
     }
 
+    if (!validatedPayload.data) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+        };
+    }
+
+    // ৩️⃣ Prepare backend payload
+    // const backendPayload = {
+    //     travelPlan: {
+    //         title: validatedPayload.data.title,
+    //         destination: validatedPayload.data.destination,
+    //         country: validatedPayload.data.country,
+    //         startDate: validatedPayload.data.startDate,
+    //         endDate: validatedPayload.data.endDate,
+    //         budget: validatedPayload.data.budget,
+    //         description: validatedPayload.data.description,
+    //         travelType: validatedPayload.data.travelType,
+    //         visibility: validatedPayload.data.visibility,
+    //     },
+    // };
+
+    // // ৪️⃣ FormData for files + JSON
+    // const newFormData = new FormData();
+    // newFormData.append("data", JSON.stringify(backendPayload));
+    // newFormData.append("file", formData.get("file") as Blob)
+
+    // ======================================================
+    const backendPayload = {
+        travelPlan: {
+            title: formData.get("title") as string,
+            destination: formData.get("destination") as string,
+            country: formData.get("country") as string,
+            startDate: formData.get("startDate") as string,
+            endDate: formData.get("endDate") as string,
+            budget: formData.get("budget") ? Number(formData.get("budget")) : undefined,
+            description: formData.get("description") as string,
+            travelType: formData.get("travelType") as string,
+            visibility: formData.get("visibility") === "true",
+        }
+    };
+
+    const newFormData = new FormData();
+    newFormData.append("travelPlan", JSON.stringify(backendPayload.travelPlan));
+
+
+    const photos = formData.getAll("photos") as File[];
+    photos.forEach(photo => newFormData.append("photos", photo));
+    // ======================================================
+
+    // ৫️⃣ Send to backend
     try {
         const response = await serverFetch.post("/travel-plans", {
-            body: JSON.stringify({ travelPlan: validation.data }),
-            headers: { "Content-Type": "application/json" },
+            body: newFormData,
         });
-        return await response.json();
+
+        const result = await response.json();
+
+        // ৬️⃣ Revalidate tags (optional)
+        if (result.success) {
+            revalidateTag("travel-plans-list", { expire: 0 });
+            revalidateTag("travel-plans-dashboard", { expire: 0 });
+        }
+
+        return result;
     } catch (error: any) {
         console.error("Create travel plan error:", error);
         return {
             success: false,
             message: process.env.NODE_ENV === "development" ? error.message : "Failed to create travel plan",
+            formData: validationPayload,
         };
     }
 }
 
-/** UPDATE TRAVEL PLAN (Admin view) */
+/** UPDATE TRAVEL PLAN */
 export async function updateTravelPlan(id: string, formData: FormData) {
-    const validationPayload: any = {
-        title: formData.get("title") as string,
-        destination: formData.get("destination") as string,
-        country: formData.get("country") as string,
-        startDate: formData.get("startDate") as string,
-        endDate: formData.get("endDate") as string,
+    const travelPlanPayload: any = {
+        title: formData.get("title")?.toString() || "",
+        destination: formData.get("destination")?.toString() || "",
+        country: formData.get("country")?.toString() || "",
+        startDate: formData.get("startDate")?.toString() || "",
+        endDate: formData.get("endDate")?.toString() || "",
         budget: formData.get("budget") ? Number(formData.get("budget")) : undefined,
-        description: formData.get("description") as string,
-        travelType: formData.get("travelType") as string,
-        photos: formData.getAll("photos") as string[],
+        description: formData.get("description")?.toString() || "",
+        travelType: formData.get("travelType")?.toString() || TravelType.SOLO,
+        photos: formData.getAll("photos") as File[],
         visibility: formData.get("visibility") === "true",
     };
 
-    const validation = zodValidator(validationPayload, updateTravelPlanZodSchema);
+    const validation = zodValidator(travelPlanPayload, updateTravelPlanZodSchema);
 
-    if (!validation.success && validation.errors) {
+    if (!validation.success) {
         return {
             success: false,
             message: "Validation failed",
-            formData: validationPayload,
             errors: validation.errors,
+            formData: travelPlanPayload,
         };
     }
 
     try {
-        const response = await serverFetch.patch(`/travel-plans/${id}`, {
-            body: JSON.stringify({ travelPlan: validation.data }),
-            headers: { "Content-Type": "application/json" },
-        });
+        const body = new FormData();
+        body.append("travelPlan", JSON.stringify(validation.data));
+        (travelPlanPayload.photos as File[]).forEach(file => body.append("photos", file));
+
+        const response = await serverFetch.patch(`/travel-plans/${id}`, { body });
         return await response.json();
     } catch (error: any) {
         console.error("Update travel plan error:", error);
         return {
             success: false,
             message: process.env.NODE_ENV === "development" ? error.message : "Failed to update travel plan",
-            formData: validationPayload,
+            formData: travelPlanPayload,
         };
     }
 }

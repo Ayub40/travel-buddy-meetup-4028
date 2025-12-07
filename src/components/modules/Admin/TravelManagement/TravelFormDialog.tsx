@@ -11,7 +11,7 @@ import {
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createTravelPlan, updateTravelPlan } from "@/service/admin/travelPlanManagement";
+import { createTravelPlanAdmin, updateTravelPlan } from "@/service/admin/travelPlanManagement";
 import { ITravelPlan, TravelType } from "@/types/travel.interface";
 import Image from "next/image";
 import { useActionState, useEffect, useRef, useState } from "react";
@@ -31,9 +31,10 @@ const TravelPlanFormDialog = ({ open, onClose, onSuccess, travelPlan }: ITravelP
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const isEdit = !!travelPlan?.id;
+    // console.log(travelPlan);
 
     const [state, formAction, isPending] = useActionState(
-        isEdit ? updateTravelPlan.bind(null, travelPlan?.id as string) : createTravelPlan,
+        isEdit ? updateTravelPlan.bind(null, travelPlan?.id as string) : createTravelPlanAdmin,
         null
     );
 

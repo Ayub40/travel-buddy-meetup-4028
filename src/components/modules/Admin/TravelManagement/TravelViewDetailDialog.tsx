@@ -14,6 +14,7 @@ import { formatDateTime, getInitials } from "@/lib/formatters";
 import { ITravelPlan } from "@/types/travel.interface";
 // import { ITravelPlan } from "@/types/travelPlan.interface";
 import { Calendar, MapPin, Globe2, Camera, User, DollarSign } from "lucide-react";
+import Image from "next/image";
 
 interface ITravelPlanViewDialogProps {
     open: boolean;
@@ -108,13 +109,40 @@ const TravelPlanViewDialog = ({
                                     />
                                 </div>
 
-                                <div className="flex items-start gap-3">
+                                {/* <div className="flex items-start gap-3">
                                     <Camera className="h-4 w-4 mt-1 text-muted-foreground" />
                                     <InfoRow
                                         label="Photos"
                                         value={`${travelPlan?.photos?.length || 0} photos`}
                                     />
+                                </div> */}
+
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-start gap-3">
+                                        <Camera className="h-4 w-4 mt-1 text-muted-foreground" />
+                                        <InfoRow
+                                            label="Photos"
+                                            value={`${travelPlan?.photos?.length || 0} photos`}
+                                        />
+                                    </div>
+
+                                    {/* Photos preview */}
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {travelPlan?.photos?.map((photoUrl, idx) => (
+                                            <div key={idx} className="relative h-20 w-20">
+                                                <Image
+                                                    src={photoUrl}
+                                                    alt={`Photo ${idx + 1}`}
+                                                    fill
+                                                    className="object-cover rounded-md border"
+                                                    sizes="80px"
+                                                    priority={idx === 0}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
