@@ -38,7 +38,8 @@ export async function updateMyProfile(formData: FormData) {
         }
 
         const response = await serverFetch.patch(`/user/update-my-profile`, {
-            body: uploadFormData,
+            // body: uploadFormData,
+            body: formData,
         });
 
         const result = await response.json();

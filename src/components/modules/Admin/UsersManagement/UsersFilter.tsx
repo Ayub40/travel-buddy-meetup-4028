@@ -19,7 +19,7 @@ const UsersFilter = () => {
                 <SearchFilter paramName="email" placeholder="Email" />
 
                 {/* Contact Number Filter */}
-                <SearchFilter paramName="contactNumber" placeholder="Contact" />
+                {/* <SearchFilter paramName="contactNumber" placeholder="Contact" /> */}
 
                 {/* Clear All Filters */}
                 <ClearFiltersButton />

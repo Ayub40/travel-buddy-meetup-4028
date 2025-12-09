@@ -26,7 +26,7 @@ const UserViewDetailDialog = ({
     return null;
   };
 
-    const contactNumber = user.user?.contactNumber || "N/A";
+    // const contactNumber = user.user?.contactNumber || "N/A";
     const address = user.user?.address || "N/A";
 
     return (
@@ -79,7 +79,7 @@ const UserViewDetailDialog = ({
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-muted/50 p-4 rounded-lg">
                                 <div className="flex items-start gap-3">
                                     <Phone className="h-4 w-4 mt-1 text-muted-foreground" />
-                                    <InfoRow label="Phone Number" value={contactNumber} />
+                                    {/* <InfoRow label="Phone Number" value={contactNumber} /> */}
                                 </div>
                                 <div className="flex items-start gap-3 md:col-span-2">
                                     <MapPin className="h-4 w-4 mt-1 text-muted-foreground" />

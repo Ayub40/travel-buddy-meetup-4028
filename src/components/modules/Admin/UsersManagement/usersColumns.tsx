@@ -18,14 +18,14 @@ export const usersColumns: Column<UserInfo>[] = [
         ),
         sortKey: "name",
     },
-    {
-        header: "Contact",
-        accessor: (user) => (
-            <div className="flex flex-col">
-                <span className="text-sm">{user.user?.contactNumber || "N/A"}</span>
-            </div>
-        ),
-    },
+    // {
+    //     header: "Contact",
+    //     accessor: (user) => (
+    //         <div className="flex flex-col">
+    //             <span className="text-sm">{user.user?.contactNumber || "N/A"}</span>
+    //         </div>
+    //     ),
+    // },
     {
         header: "Address",
         accessor: (user) => (

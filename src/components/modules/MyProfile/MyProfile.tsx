@@ -27,12 +27,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
     const getProfilePhoto = () => {
         if (userInfo.role === "ADMIN") {
             return userInfo.admin?.profilePhoto;
-        }
-        // else if (userInfo.role === "DOCTOR") {
-        //   return userInfo.doctor?.profilePhoto;
-        // } 
-        else if (userInfo.role === "USER") {
-            return userInfo.user?.profilePhoto;
+        } else if (userInfo.role === "USER") {
+            // return userInfo.user?.profileImage;
+            return userInfo.profileImage;
         }
         return null;
     };
@@ -45,7 +42,8 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
         //   return userInfo.doctor;
         // } 
         else if (userInfo.role === "USER") {
-            return userInfo.user;
+            // return userInfo.user;
+            return userInfo;
         }
         return null;
     };
@@ -56,8 +54,10 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            console.log("Selected file:", file); // 🔹 Debug
             const reader = new FileReader();
             reader.onloadend = () => {
+                console.log("Preview URL:", reader.result); // 🔹 Debug
                 setPreviewImage(reader.result as string);
             };
             reader.readAsDataURL(file);
@@ -71,8 +71,20 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 
         const formData = new FormData(e.currentTarget);
 
+        // ✅ If User, File send name is profileImage 
+        // if (userInfo.role === "USER" && formData.get('file')) {
+        //     formData.set('profileImage', formData.get('file') as File);
+        //     formData.delete('file'); // file remove if needed
+        // }
+
+        // 🔹 Debug: FormData contents
+        formData.forEach((value, key) => {
+            console.log("FormData:", key, value);
+        });
+
         startTransition(async () => {
             const result = await updateMyProfile(formData);
+            console.log("Update Result:", result); // 🔹 Debug: API response
 
             if (result.success) {
                 setSuccess(result.message);
@@ -83,6 +95,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
             }
         });
     };
+
+    console.log("User Info:", userInfo);
+    console.log("Profile Image:", userInfo.profileImage);
 
     return (
         <div className="space-y-6">
@@ -186,7 +201,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                                     />
                                 </div>
 
-                                <div className="space-y-2">
+                                {/* <div className="space-y-2">
                                     <Label htmlFor="contactNumber">Contact Number</Label>
                                     <Input
                                         id="contactNumber"
@@ -195,7 +210,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                                         required
                                         disabled={isPending}
                                     />
-                                </div>
+                                </div> */}
 
                                 {/* User-Specific Fields */}
                                 {userInfo.role === "USER" && userInfo.user && (

@@ -4,8 +4,9 @@ import { IAdmin } from "./admin.interface";
 export interface IUser {
     id: string;
     name?: string;
-    profilePhoto?: string;
-    contactNumber?: string;
+    // profilePhoto?: string;
+    profileImage?: string;
+    // contactNumber?: string;
     address?: string;
     createdAt: string;
     updatedAt: string;

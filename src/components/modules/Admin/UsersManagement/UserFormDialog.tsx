@@ -91,7 +91,7 @@ const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps
                             <InputFieldError field="email" state={state} />
                         </Field>
 
-                        <Field>
+                        {/* <Field>
                             <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
                             <Input
                                 id="contactNumber"
@@ -102,7 +102,7 @@ const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps
                                 }
                             />
                             <InputFieldError field="contactNumber" state={state} />
-                        </Field>
+                        </Field> */}
 
                         <Field>
                             <FieldLabel htmlFor="address">Address</FieldLabel>
