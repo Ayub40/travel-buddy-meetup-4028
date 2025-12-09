@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const TravelCard = ({ plan }: any) => {
-    
+
     return (
         <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-all rounded-xl">
             <CardHeader className="p-0">

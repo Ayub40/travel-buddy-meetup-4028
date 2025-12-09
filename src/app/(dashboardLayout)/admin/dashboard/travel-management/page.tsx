@@ -14,9 +14,8 @@ const TravelPlanManagementPage = async ({
 }) => {
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj);
-
     const travelPlansResult = await getAllTravelPlans(queryString);
-    console.log(travelPlansResult);
+    // console.log(travelPlansResult);
 
     const totalPages = Math.ceil(
         (travelPlansResult?.meta?.total || 1) / (travelPlansResult?.meta?.limit || 1)

@@ -16,8 +16,6 @@ import { ITravelPlan, TravelType } from "@/types/travel.interface";
 import Image from "next/image";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-// import { createTravelPlan, updateTravelPlan } from "@/service/travel/travelManagement";
-
 
 
 interface ITravelPlanFormDialogProps {
@@ -45,11 +43,6 @@ const TravelPlanFormDialog = ({ open, onClose, onSuccess, travelPlan }: ITravelP
         setSelectedFiles(files);
     };
 
-    const handleClose = () => {
-        setSelectedFiles([]);
-        formRef.current?.reset();
-        onClose();
-    };
 
     useEffect(() => {
         if (state?.success) {
@@ -68,6 +61,12 @@ const TravelPlanFormDialog = ({ open, onClose, onSuccess, travelPlan }: ITravelP
             }
         }
     }, [state, onSuccess, onClose, selectedFiles]);
+
+    const handleClose = () => {
+        setSelectedFiles([]);
+        formRef.current?.reset();
+        onClose();
+    };
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>

@@ -1,6 +1,5 @@
 "use client";
 
-// import { useDebounce } from "@/hooks/useDebounce";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -44,13 +43,6 @@ const SearchFilter = ({
             router.push(`?${params.toString()}`);
         });
     }, [debouncedValue, paramName, router, searchParams]);
-
-
-    // console.log("URL →", searchParams.toString());
-    // console.log("state →", value);
-    // console.log("🔄 searchParams from URL:", searchParams.toString());
-    // console.log("🔄 input value:", value);
-
 
     return (
         <div className="relative">

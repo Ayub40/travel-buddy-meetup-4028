@@ -25,7 +25,7 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
     return (
         <div className="container mx-auto py-10 space-y-8">
             {/* Cover Image */}
-            <div className="w-full h-72 relative rounded-xl overflow-hidden shadow-lg">
+            <div className="w-72 h-72 relative rounded-xl overflow-hidden shadow-lg">
                 <Image
                     src={plan.coverImage || plan.photos?.[0] || "/placeholder.jpg"}
                     alt={plan.title}

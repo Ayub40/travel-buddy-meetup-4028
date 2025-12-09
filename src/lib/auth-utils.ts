@@ -9,7 +9,7 @@ export type RouteConfig = {
 export const authRoutes = ["/login", "/register", "/forgot-password"];
 
 export const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/settings", "/change-password", "/reset-password"],
+    exact: ["/my-profile", "/settings", "/change-password", "/reset-password", "/find-buddy"],
     patterns: [], // [/password/change-password, /password/reset-password => /password/*]
 }
 
@@ -25,6 +25,7 @@ export const adminProtectedRoutes: RouteConfig = {
 
 export const userProtectedRoutes: RouteConfig = {
     patterns: [/^\/dashboard/], // Routes starting with /dashboard/*
+    // exact: ["/find-buddy"], // "/dashboard"
     exact: [], // "/dashboard"
 }
 

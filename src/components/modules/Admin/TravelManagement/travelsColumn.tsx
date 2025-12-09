@@ -28,9 +28,18 @@ export const travelPlanColumns: Column<ITravelPlan>[] = [
     {
         header: "Destination",
         accessor: (plan) => (
-            <span className="text-sm">{plan.destination}, {plan.country}</span>
+            // <span className="text-sm">{plan.destination}, {plan.country}</span>
+            <span className="text-sm">{plan.destination}</span>
         ),
         sortKey: "destination",
+    },
+    {
+        header: "Country",
+        accessor: (plan) => (
+            // <span className="text-sm">{plan.destination}, {plan.country}</span>
+            <span className="text-sm">{plan.country}</span>
+        ),
+        sortKey: "country",
     },
     {
         header: "Travel Type",
@@ -46,11 +55,11 @@ export const travelPlanColumns: Column<ITravelPlan>[] = [
         ),
         sortKey: "budget",
     },
-    {
-        header: "Visibility",
-        accessor: (plan) => <StatusBadgeCell isDeleted={!plan.visibility} />,
-        sortKey: "visibility",
-    },
+    // {
+    //     header: "Visibility",
+    //     accessor: (plan) => <StatusBadgeCell isDeleted={!plan.visibility} />,
+    //     sortKey: "visibility",
+    // },
     {
         header: "Created At",
         accessor: (plan) => <DateCell date={plan.createdAt || ""} />, // default empty string

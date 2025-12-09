@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function PublicFooter() {
   return (
-    <footer className="border-t bg-background">
+    <footer className="border-t bg-background mt-5">
       <div className="container mx-auto px-4 py-10">
         {/* Top Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

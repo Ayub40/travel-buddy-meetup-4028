@@ -10,7 +10,7 @@ const PublicNavbar = async () => {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/destinations", label: "Destinations" },
-    { href: "/buddies", label: "Find Buddy" },
+    { href: "/find-buddy", label: "Find Buddy" },
     { href: "/allTravelPlan", label: "Explore Travelers" },
     { href: "/contact", label: "Contact" },
   ];

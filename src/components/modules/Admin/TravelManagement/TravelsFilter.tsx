@@ -11,15 +11,17 @@ const TravelPlansFilter = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    // const handleTravelTypeChange = (value: string) => {
-    //     const params = new URLSearchParams(searchParams.toString());
-    //     if (value) {
-    //         params.set("travelType", value);
-    //     } else {
-    //         params.delete("travelType");
-    //     }
-    //     router.push(`?${params.toString()}`);
-    // };
+    const handleTravelTypeChange = (value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (value === "all") {
+            // params.set("travelType", value);
+            params.delete("travelType")
+        } else {
+            // params.delete("travelType");
+            params.set("travelType", value);
+        }
+        router.push(`?${params.toString()}`);
+    };
 
     return (
         <div className="space-y-3">
@@ -38,7 +40,7 @@ const TravelPlansFilter = () => {
                 <SearchFilter paramName="country" placeholder="Country" />
 
                 {/* Travel Type Filter */}
-                {/* <Select
+                <Select
                     value={searchParams.get("travelType") || ""}
                     onValueChange={handleTravelTypeChange}
                 >
@@ -46,12 +48,12 @@ const TravelPlansFilter = () => {
                         <SelectValue placeholder="Travel Type" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="">All</SelectItem>
+                        <SelectItem value="all">All</SelectItem>
                         <SelectItem value={TravelType.SOLO}>Solo</SelectItem>
-                        <SelectItem value={TravelType.GROUP}>Group</SelectItem>
-                        <SelectItem value={TravelType.BACKPACK}>Backpack</SelectItem>
+                        <SelectItem value={TravelType.FAMILY}>FAMILY</SelectItem>
+                        <SelectItem value={TravelType.FRIENDS}>FRIENDS</SelectItem>
                     </SelectContent>
-                </Select> */}
+                </Select>
 
                 <ClearFiltersButton />
             </div>
