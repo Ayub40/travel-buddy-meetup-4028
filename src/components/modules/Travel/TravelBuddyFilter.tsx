@@ -21,7 +21,7 @@ const TravelBuddyFilter = ({
     country, setCountry,
     travelType, setTravelType,
     fromDate, setFromDate,
-    toDate, setToDate,
+    // toDate, setToDate,
     onClear,
 }: TravelBuddyFilterProps) => {
     return (
@@ -57,13 +57,13 @@ const TravelBuddyFilter = ({
                 onChange={(e) => setFromDate(e.target.value)}
                 placeholder="From date"
             />
-            <input
+            {/* <input
                 type="date"
                 className="border rounded px-2 py-1"
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
                 placeholder="To date"
-            />
+            /> */}
             <button
                 className="bg-gray-200 px-3 rounded hover:bg-gray-300"
                 onClick={onClear}

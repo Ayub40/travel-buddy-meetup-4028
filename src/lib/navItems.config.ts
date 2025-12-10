@@ -45,7 +45,7 @@ export const userNavItems: NavSection[] = [
         items: [
             {
                 title: "My Travel Plans",
-                href: "/dashboard/travel-plans",
+                href: "/dashboard/my-travel-plan",
                 icon: "Calendar",
                 roles: ["USER"],
             },

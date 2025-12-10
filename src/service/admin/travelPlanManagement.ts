@@ -255,3 +255,18 @@ export async function matchTravelPlans(queryString?: string) {
         };
     }
 }
+
+// For Login User Get Travel Plan
+export async function getMyTravelPlans() {
+    try {
+        const response = await serverFetch.get("/travel-plans/my-travel-plan");
+        return await response.json();
+    } catch (error: any) {
+        console.error("Get my travel plans error:", error);
+        return {
+            success: false,
+            message: process.env.NODE_ENV === "development" ? error.message : "Failed to fetch your travel plans",
+            data: [],
+        };
+    }
+}
