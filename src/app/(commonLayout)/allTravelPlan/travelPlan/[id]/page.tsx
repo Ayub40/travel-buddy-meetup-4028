@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import TravelPlanReview from "@/components/modules/Review/TravelPlanReview";
 import { getTravelPlanById } from "@/service/admin/travelPlanManagement";
 import Image from "next/image";
 
@@ -21,6 +23,8 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
             </div>
         );
     }
+
+    const tripEnded = new Date() > new Date(plan.endDate);
 
     return (
         <div className="container mx-auto py-10 space-y-8">
@@ -73,11 +77,11 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
             {/* Reviews */}
             <div>
                 <h2 className="text-2xl font-semibold mb-3">Reviews</h2>
-                {plan.reviews.length === 0 ? (
+                {plan.reviews?.length === 0 ? (
                     <p className="text-gray-600">No reviews yet.</p>
                 ) : (
                     <div className="space-y-4">
-                        {plan.reviews.map((review: any, index: number) => (
+                        {plan.reviews?.map((review: any, index: number) => (
                             <div key={index} className="p-4 border rounded-lg shadow-sm">
                                 <p className="font-semibold">{review.user?.name}</p>
                                 <p className="text-sm text-muted-foreground">
@@ -89,6 +93,12 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                     </div>
                 )}
             </div>
+            <TravelPlanReview travelPlanId={plan.id} tripEnded={tripEnded} />
+            {/* Review Form */}
+            {/* <div className="mt-10 p-6 border rounded-xl shadow-sm bg-white">
+                <h2 className="text-2xl font-semibold mb-4">Write a Review</h2>
+                <ReviewForm travelPlanId={plan.id} onSuccess={() => window.location.reload()} />
+            </div> */}
         </div>
     );
 };

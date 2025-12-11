@@ -256,21 +256,6 @@ export async function matchTravelPlans(queryString?: string) {
     }
 }
 
-// For Login User Get Travel Plan
-// export async function getMyTravelPlans() {
-//     try {
-//         const response = await serverFetch.get("/travel-plans/my-travel-plan");
-//         return await response.json();
-//     } catch (error: any) {
-//         console.error("Get my travel plans error:", error);
-//         return {
-//             success: false,
-//             message: process.env.NODE_ENV === "development" ? error.message : "Failed to fetch your travel plans",
-//             data: [],
-//         };
-//     }
-// }
-
 export async function getMyTravelPlans(queryString?: string) {
     try {
         const response = await serverFetch.get(`/travel-plans/my-travel-plan${queryString ? `?${queryString}` : ""}`);
@@ -286,6 +271,39 @@ export async function getMyTravelPlans(queryString?: string) {
         };
     }
 }
+
+/** Send Join Request */
+export async function sendJoinRequest(travelPlanId: string) {
+    try {
+        const response = await serverFetch.post(`/user/join-request/${travelPlanId}`);
+        return await response.json();
+    } catch (error: any) {
+        console.error("Failed to send join request:", error);
+        return {
+            success: false,
+            message: "Failed to send join request"
+        };
+    }
+}
+
+
+
+// For Login User Get Travel Plan
+// export async function getMyTravelPlans() {
+//     try {
+//         const response = await serverFetch.get("/travel-plans/my-travel-plan");
+//         return await response.json();
+//     } catch (error: any) {
+//         console.error("Get my travel plans error:", error);
+//         return {
+//             success: false,
+//             message: process.env.NODE_ENV === "development" ? error.message : "Failed to fetch your travel plans",
+//             data: [],
+//         };
+//     }
+// }
+
+
 
 // export async function getAdmins(queryString?: string) {
 //     try {

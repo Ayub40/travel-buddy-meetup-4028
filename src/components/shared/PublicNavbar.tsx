@@ -9,10 +9,10 @@ import LogoutButton from "./LogoutButton";
 const PublicNavbar = async () => {
   const navItems = [
     { href: "/", label: "Home" },
-    { href: "/destinations", label: "Destinations" },
+    // { href: "/destinations", label: "Destinations" },
     { href: "/find-buddy", label: "Find Buddy" },
     { href: "/allTravelPlan", label: "Explore Travelers" },
-    { href: "/contact", label: "Contact" },
+    // { href: "/contact", label: "Contact" },
   ];
 
   const accessToken = await getCookie("accessToken");
@@ -36,7 +36,23 @@ const PublicNavbar = async () => {
           ))}
         </nav>
 
+        {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-2">
+          {accessToken ? (
+            <>
+              <Link href="/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+              <LogoutButton />
+            </>
+          ) : (
+            <Link href="/login">
+              <Button>Login</Button>
+            </Link>
+          )}
+        </div>
+
+        {/* <div className="hidden md:flex items-center space-x-2">
           {accessToken ? (
             <LogoutButton />
           ) : (
@@ -45,6 +61,13 @@ const PublicNavbar = async () => {
             </Link>
           )}
         </div>
+        <div className="hidden md:flex items-center space-x-2">
+          {accessToken && (
+            <Link href="/dashboard">
+              <Button>Dashboard</Button>
+            </Link>
+          )}
+        </div> */}
 
         {/* Mobile Menu */}
 

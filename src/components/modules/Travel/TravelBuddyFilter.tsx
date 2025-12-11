@@ -3,6 +3,8 @@
 import { Dispatch, SetStateAction } from "react";
 
 interface TravelBuddyFilterProps {
+    // email: string;
+    // setEmail: Dispatch<SetStateAction<string>>;
     destination: string;
     setDestination: Dispatch<SetStateAction<string>>;
     country: string;

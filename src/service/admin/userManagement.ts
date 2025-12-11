@@ -102,7 +102,6 @@ export async function hardDeleteUser(id: string) {
     }
 }
 
-
 export async function getDashboardStats() {
     try {
         const response = await serverFetch.get("/user/dashboard");

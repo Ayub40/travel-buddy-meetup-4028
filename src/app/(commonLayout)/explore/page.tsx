@@ -2,10 +2,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import TravelFilters from "./TravelFilters";
-// import TravelList from "./TravelList";
-// import EmptyState from "./EmptyState";
-// import Pagination from "./Pagination";
 import { serverFetch } from "@/lib/server-fetch";
 import TravelFilters from "@/components/modules/Explore/TravelFilters";
 import EmptyState from "@/components/modules/Explore/EmptyState";
@@ -47,29 +43,6 @@ const ExplorePage = () => {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
-
-    // const fetchTravelers = async () => {
-    //     setLoading(true);
-    //     try {
-    //         const queryParams = new URLSearchParams({
-    //             ...filters,
-    //             page: page.toString(),
-    //             limit: limit.toString(),
-    //             searchTerm: filters.destination,
-    //         }).toString();
-
-    //         const response = await serverFetch.get(`/users?${queryParams}`);
-    //         const data = await response.json();
-
-    //         setTravelers(data.data || []);
-    //         setTotalPages(data.meta?.total ? Math.ceil(data.meta.total / limit) : 1);
-    //     } catch (err) {
-    //         console.error("Error fetching travelers:", err);
-    //         setTravelers([]);
-    //         setTotalPages(1);
-    //     }
-    //     setLoading(false);
-    // };
 
     useEffect(() => {
         const fetchData = async () => {

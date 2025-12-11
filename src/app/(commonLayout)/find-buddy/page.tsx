@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ITravelPlan } from "@/types/travel.interface";
 import { matchTravelPlans } from "@/service/admin/travelPlanManagement";
-// import TravelBuddyCard from "./TravelBuddyCard";
-// import TravelBuddyFilter from "./TravelBuddyFilter";
 import TablePagination from "@/components/shared/TablePagination";
 import { useSearchParams } from "next/navigation";
 import TravelBuddyFilter from "@/components/modules/Travel/TravelBuddyFilter";
@@ -18,6 +16,7 @@ const FindTravelBuddy = () => {
     const [travelPlans, setTravelPlans] = useState<ITravelPlan[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // const [email, setEmail] = useState("");
     const [destination, setDestination] = useState("");
     const [country, setCountry] = useState("");
     const [travelType, setTravelType] = useState("");
@@ -30,6 +29,7 @@ const FindTravelBuddy = () => {
         setLoading(true);
 
         const queryParams = new URLSearchParams();
+        // if (email) queryParams.set("email", email);
         if (destination) queryParams.set("destination", destination);
         if (country) queryParams.set("country", country);
         if (travelType) queryParams.set("travelType", travelType);
@@ -69,6 +69,7 @@ const FindTravelBuddy = () => {
     return (
         <div className="space-y-4 container mx-auto mt-5">
             <TravelBuddyFilter
+                // email={email} setEmail={setEmail}
                 destination={destination} setDestination={setDestination}
                 country={country} setCountry={setCountry}
                 travelType={travelType} setTravelType={setTravelType}
@@ -87,7 +88,7 @@ const FindTravelBuddy = () => {
             ) : (
                 <div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 container mx-auto mb-5">
-                        {travelPlans.map(plan => (
+                        {travelPlans?.map(plan => (
                             <TravelBuddyCard key={plan.id} plan={plan} />
                         ))}
                     </div>

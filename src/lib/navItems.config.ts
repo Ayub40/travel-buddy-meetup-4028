@@ -21,17 +21,17 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                 },
             ],
         },
-        {
-            title: "Settings",
-            items: [
-                {
-                    title: "Change Password",
-                    href: "/change-password",
-                    icon: "Settings",
-                    roles: ["USER", "ADMIN", "SUPER_ADMIN"],
-                },
-            ],
-        },
+        // {
+        //     title: "Settings",
+        //     items: [
+        //         {
+        //             title: "Change Password",
+        //             href: "/change-password",
+        //             icon: "Settings",
+        //             roles: ["USER", "ADMIN", "SUPER_ADMIN"],
+        //         },
+        //     ],
+        // },
     ];
 };
 
@@ -49,12 +49,12 @@ export const userNavItems: NavSection[] = [
                 icon: "Calendar",
                 roles: ["USER"],
             },
-            {
-                title: "Create New Plan",
-                href: "/dashboard/travel-plans/add",
-                icon: "PlusCircle",
-                roles: ["USER"],
-            },
+            // {
+            //     title: "Create New Plan",
+            //     href: "/dashboard/travel-plans/add",
+            //     icon: "PlusCircle",
+            //     roles: ["USER"],
+            // },
         ],
     },
     {
