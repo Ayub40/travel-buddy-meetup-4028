@@ -58,23 +58,23 @@ export const userNavItems: NavSection[] = [
             // },
         ],
     },
-    {
-        title: "Explore",
-        items: [
-            {
-                title: "Find Travelers",
-                href: "/explore",
-                icon: "Search",
-                roles: ["USER"],
-            },
-            {
-                title: "Matches",
-                href: "/dashboard/matches",
-                icon: "Users",
-                roles: ["USER"],
-            },
-        ],
-    },
+    // {
+    //     title: "Explore",
+    //     items: [
+    //         {
+    //             title: "Find Travelers",
+    //             href: "/explore",
+    //             icon: "Search",
+    //             roles: ["USER"],
+    //         },
+    //         {
+    //             title: "Matches",
+    //             href: "/dashboard/matches",
+    //             icon: "Users",
+    //             roles: ["USER"],
+    //         },
+    //     ],
+    // },
     {
         title: "Reviews",
         items: [
@@ -86,17 +86,17 @@ export const userNavItems: NavSection[] = [
             },
         ],
     },
-    {
-        title: "Subscription",
-        items: [
-            {
-                title: "Upgrade Plan",
-                href: "/pricing",
-                icon: "CreditCard",
-                roles: ["USER"],
-            },
-        ],
-    },
+    // {
+    //     title: "Subscription",
+    //     items: [
+    //         {
+    //             title: "Upgrade Plan",
+    //             href: "/pricing",
+    //             icon: "CreditCard",
+    //             roles: ["USER"],
+    //         },
+    //     ],
+    // },
 ];
 
 /* -------------------------------------------------------------------------- */

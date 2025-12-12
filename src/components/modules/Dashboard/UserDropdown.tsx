@@ -62,19 +62,19 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
                         Profile
                     </Link>
                 </DropdownMenuItem> */}
-                <DropdownMenuItem
+                {/* <DropdownMenuItem
                     onClick={handleProfileClick} // ✅ use router.push
                     className="cursor-pointer flex items-center gap-2"
                 >
                     <User className="h-4 w-4" />
                     Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                </DropdownMenuItem> */}
+                {/* <DropdownMenuItem asChild>
                     <Link href={"/change-password"} className="cursor-pointer">
                         <Settings className="mr-2 h-4 w-4" />
                         Change Password
                     </Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     onClick={handleLogout}

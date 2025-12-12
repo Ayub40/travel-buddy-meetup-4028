@@ -29,6 +29,7 @@ const PublicNavbar = async () => {
     { href: "/", label: "Home" },
     { href: "/allTravelPlan", label: "Explore Travelers" },
     { href: "/dashboard/my-travel-plan", label: "My Travel Plans" },
+    { href: "/find-buddy", label: "Find Travel Buddy" },
     // { href: "/dashboard/my-profile", label: "Profile" },
   ];
 

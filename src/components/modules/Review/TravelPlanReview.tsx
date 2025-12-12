@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { IReviewCreate } from "@/types/review.interface";
 import { createReview, deleteReview, getReviewsByPlan, updateReview } from "@/service/review/reviews.services";
 import { getUserInfo } from "@/service/auth/getUserInfo";
+import { toast } from "sonner";
 
 
 interface Props {
@@ -73,8 +74,9 @@ export default function TravelPlanReview({ travelPlanId, tripEnded }: Props) {
             fetchReviews();
             setFormData({ rating: 5, comment: "" });
             setEditingReview(null);
+            toast.success("Review submitted successfully!");
         } else {
-            alert(result.message || "Failed to save review");
+            toast.error(result.message || "Failed to save review");
         }
     };
 
