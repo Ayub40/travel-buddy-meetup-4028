@@ -39,10 +39,107 @@ export async function getUserById(id: string) {
     }
 }
 
+// export async function updateUser(id: string, _prevState: any, formData: FormData) {
+//     const validationPayload: any = {
+//         name: formData.get("name") as string,
+//         contactNumber: formData.get("contactNumber") as string,
+//         address: formData.get("address") as string,
+//     };
+
+//     const validation = zodValidator(validationPayload, updateMyProfileZodSchema);
+//     if (!validation.success && validation.errors) {
+//         return {
+//             success: false,
+//             message: "Validation failed",
+//             formData: validationPayload,
+//             errors: validation.errors,
+//         };
+//     }
+
+//     if (!validation.data) {
+//         return {
+//             success: false,
+//             message: "Validation failed",
+//             formData: validationPayload,
+//             errors: [{ field: "unknown", message: "Invalid data" }],
+//         };
+//     }
+//     try {
+
+//         const response = await serverFetch.patch(`/user/update-my-profile/${id}`, {
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify(validation.data),
+//         });
+
+//         const result = await response.json();
+//         return result;
+//     } catch (error: any) {
+//         console.error("Update patient error:", error);
+//         return {
+//             success: false,
+//             message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to update patient',
+//             formData: validationPayload
+//         };
+//     }
+// }
+
 /**
- * UPDATE USER STATUS  
- * API: PATCH /user/:id/status
+ * UPDATE ANY USER (ADMIN / SUPER_ADMIN)
+ * API: PATCH /user/update-my-profile
+ * Admin / SuperAdmin can update any user by id
  */
+export async function updateAnyUser(id: string, _prevState: any, formData: FormData) {
+    // Build validation payload
+    const validationPayload: any = {
+        name: formData.get("name") as string,
+        bio: formData.get("bio") as string,
+        currentLocation: formData.get("location") as string,
+        interests: formData.get("interests") ? JSON.parse(formData.get("interests") as string) : [],
+        visitedCountries: formData.get("visitedCountries") ? JSON.parse(formData.get("visitedCountries") as string) : [],
+        profileImage: formData.get("file") || undefined,
+    };
+
+    const validation = zodValidator(validationPayload, updateMyProfileZodSchema);
+
+    if (!validation.success && validation.errors) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+            errors: validation.errors,
+        };
+    }
+
+    if (!validation.data) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+        };
+    }
+
+    const newFormData = new FormData();
+    newFormData.append("data", JSON.stringify(validation.data));
+    if (formData.get("file")) {
+        newFormData.append("file", formData.get("file") as Blob);
+    }
+
+    try {
+        const response = await serverFetch.patch(`/user/update-user-profile/${id}`, {
+            body: newFormData,
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.error("Update user error:", error);
+        return {
+            success: false,
+            message: process.env.NODE_ENV === "development" ? error.message : "Failed to update user",
+            formData: validationPayload,
+        };
+    }
+}
+
 export async function updateUserStatus(id: string, status: string) {
     const validation = zodValidator({ status }, updateUserStatusZodSchema);
 
@@ -69,6 +166,11 @@ export async function updateUserStatus(id: string, status: string) {
         };
     }
 }
+
+/**
+ * UPDATE USER STATUS  
+ * API: PATCH /user/:id/status
+ */
 
 /**
  * SOFT DELETE USER  
@@ -157,3 +259,5 @@ export async function getMyJoinRequests() {
         };
     }
 }
+
+

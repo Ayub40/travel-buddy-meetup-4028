@@ -15,14 +15,25 @@ import { logoutUser } from "@/service/auth/logoutUser";
 import { UserInfo } from "@/types/user.interface";
 import { Settings, User } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface UserDropdownProps {
     userInfo: UserInfo;
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
+    const router = useRouter();
+
     const handleLogout = async () => {
         await logoutUser();
+    };
+
+    const handleProfileClick = () => {
+        if (userInfo.role === "ADMIN" || userInfo.role === "SUPER_ADMIN") {
+            router.push("/admin/dashboard/admin-profile");
+        } else {
+            router.push("/my-profile");
+        }
     };
 
     return (
@@ -45,11 +56,18 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+                {/* <DropdownMenuItem asChild>
                     <Link href={"/my-profile"} className="cursor-pointer">
                         <User className="mr-2 h-4 w-4" />
                         Profile
                     </Link>
+                </DropdownMenuItem> */}
+                <DropdownMenuItem
+                    onClick={handleProfileClick} // ✅ use router.push
+                    className="cursor-pointer flex items-center gap-2"
+                >
+                    <User className="h-4 w-4" />
+                    Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     <Link href={"/change-password"} className="cursor-pointer">

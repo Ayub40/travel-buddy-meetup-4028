@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { updateUser } from "@/service/admin/userManagement";
-// import { updateUser } from "@/services/admin/usersManagement";
+import { updateAnyUser } from "@/service/admin/userManagement";
+import { registerUser } from "@/service/auth/registerUser";
 import { UserInfo } from "@/types/user.interface";
 import { useActionState, useEffect, useRef } from "react";
 import { toast } from "sonner";
@@ -19,29 +19,27 @@ import { toast } from "sonner";
 interface IUserFormDialogProps {
     open: boolean;
     onClose: () => void;
-    onSuccess: () => void;
+    onSuccess: (user: UserInfo) => void;
     user?: UserInfo;
 }
 
 const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps) => {
     const formRef = useRef<HTMLFormElement>(null);
 
+    const isEdit = !!user?.id;
+
     const [state, formAction, isPending] = useActionState(
-        updateUser.bind(null, user?.id as string),
+        isEdit ? updateAnyUser.bind(null, user?.id as string) : registerUser,
         null
     );
-    const prevStateRef = useRef(state);
 
-    // Handle success/error from server
+    // Handle server response
     useEffect(() => {
-        if (state === prevStateRef.current) return;
-        prevStateRef.current = state;
-        if (state?.success) {
+        if (state?.success && state.data) {
             toast.success(state.message || "Operation successful");
-            if (formRef.current) {
-                formRef.current.reset();
-            }
-            onSuccess();
+
+            formRef.current?.reset();
+            onSuccess(state.data as UserInfo);
             onClose();
         } else if (state?.message && !state.success) {
             toast.error(state.message);
@@ -57,16 +55,13 @@ const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="max-h-[90vh] flex flex-col p-0">
                 <DialogHeader className="px-6 pt-6 pb-4">
-                    <DialogTitle>Edit User</DialogTitle>
+                    <DialogTitle>{isEdit ? "Edit User" : "Add New User"}</DialogTitle>
                 </DialogHeader>
 
-                <form
-                    ref={formRef}
-                    action={formAction}
-                    className="flex flex-col flex-1 min-h-0"
-                >
+                <form ref={formRef} action={formAction} className="flex flex-col flex-1 min-h-0">
                     <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
-                        {/* Basic Information */}
+
+                        {/* Name */}
                         <Field>
                             <FieldLabel htmlFor="name">Name</FieldLabel>
                             <Input
@@ -78,6 +73,7 @@ const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps
                             <InputFieldError field="name" state={state} />
                         </Field>
 
+                        {/* Email */}
                         <Field>
                             <FieldLabel htmlFor="email">Email</FieldLabel>
                             <Input
@@ -86,48 +82,50 @@ const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps
                                 type="email"
                                 placeholder="user@example.com"
                                 defaultValue={state?.formData?.email || user?.email || ""}
-                                disabled={isPending}
+                                disabled={isEdit}
                             />
                             <InputFieldError field="email" state={state} />
                         </Field>
 
-                        {/* <Field>
-                            <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
-                            <Input
-                                id="contactNumber"
-                                name="contactNumber"
-                                placeholder="+1234567890"
-                                defaultValue={
-                                    state?.formData?.contactNumber || user?.user?.contactNumber || ""
-                                }
-                            />
-                            <InputFieldError field="contactNumber" state={state} />
-                        </Field> */}
-
+                        {/* Address */}
                         <Field>
                             <FieldLabel htmlFor="address">Address</FieldLabel>
                             <Input
                                 id="address"
                                 name="address"
-                                placeholder="123 Main St, City, Country"
+                                placeholder="123 Main St, City"
                                 defaultValue={state?.formData?.address || user?.user?.address || ""}
                             />
                             <InputFieldError field="address" state={state} />
                         </Field>
+
+                        {/* Password (only for create) */}
+                        {!isEdit && (
+                            <Field>
+                                <FieldLabel htmlFor="password">Password</FieldLabel>
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    placeholder="Enter password"
+                                    defaultValue={state?.formData?.password || ""}
+                                />
+                                <InputFieldError field="password" state={state} />
+                            </Field>
+                        )}
                     </div>
 
-                    {/* Form Actions */}
+                    {/* Actions */}
                     <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={handleClose}
-                            disabled={isPending}
-                        >
+                        <Button type="button" variant="outline" onClick={handleClose} disabled={isPending}>
                             Cancel
                         </Button>
                         <Button type="submit" disabled={isPending}>
-                            {isPending ? "Saving..." : "Save Changes"}
+                            {isPending
+                                ? "Saving..."
+                                : isEdit
+                                    ? "Update User"
+                                    : "Create User"}
                         </Button>
                     </div>
                 </form>
@@ -137,3 +135,181 @@ const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps
 };
 
 export default UserFormDialog;
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import InputFieldError from "@/components/shared/InputFieldError";
+// import { Button } from "@/components/ui/button";
+// import {
+//     Dialog,
+//     DialogContent,
+//     DialogHeader,
+//     DialogTitle,
+// } from "@/components/ui/dialog";
+// import { Field, FieldLabel } from "@/components/ui/field";
+// import { Input } from "@/components/ui/input";
+// import { updateAnyUser } from "@/service/admin/userManagement";
+// import { registerUser } from "@/service/auth/registerUser";
+// // import { updateUser } from "@/service/admin/userManagement";
+// // import { updateUser } from "@/services/admin/usersManagement";
+// import { UserInfo } from "@/types/user.interface";
+// import { useActionState, useEffect, useRef } from "react";
+// import { toast } from "sonner";
+
+// interface IUserFormDialogProps {
+//     open: boolean;
+//     onClose: () => void;
+//     onSuccess: () => void;
+//     user?: UserInfo;
+// }
+
+// const UserFormDialog = ({ open, onClose, onSuccess, user }: IUserFormDialogProps) => {
+//     const formRef = useRef<HTMLFormElement>(null);
+
+//     const isEdit = !!user?.id;
+//     const [state, formAction, isPending] = useActionState(
+//         isEdit ? updateAnyUser.bind(null, user?.id as string) : registerUser,
+//         null
+//     );
+
+//     // const [state, formAction, isPending] = useActionState(
+//     //     // updateUser.bind(null, user?.id as string),
+//     //     updateAnyUser.bind(null, user?.id as string),
+//     //     null
+//     // );
+
+
+//     const prevStateRef = useRef(state);
+
+//     // const formRef = useRef<HTMLFormElement>(null);
+//     // const fileInputRef = useRef<HTMLInputElement>(null);
+//     // const isEdit = !!admin?.id;
+
+//     // const [state, formAction, isPending] = useActionState(
+//     //     isEdit ? updateAdmin.bind(null, admin?.id as string) : createAdmin,
+//     //     null
+//     // );
+//     // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+//     // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     //     const file = e.target.files?.[0];
+//     //     setSelectedFile(file || null);
+//     // };
+
+
+//     // Handle success/error from server
+//     useEffect(() => {
+//         if (state === prevStateRef.current) return;
+//         prevStateRef.current = state;
+//         if (state?.success) {
+//             toast.success(state.message || "Operation successful");
+//             if (formRef.current) {
+//                 formRef.current.reset();
+//             }
+//             onSuccess();
+//             onClose();
+//         } else if (state?.message && !state.success) {
+//             toast.error(state.message);
+//         }
+//     }, [state, onSuccess, onClose]);
+
+//     const handleClose = () => {
+//         formRef.current?.reset();
+//         onClose();
+//     };
+
+//     return (
+//         <Dialog open={open} onOpenChange={handleClose}>
+//             <DialogContent className="max-h-[90vh] flex flex-col p-0">
+//                 <DialogHeader className="px-6 pt-6 pb-4">
+//                     <DialogTitle>Edit User</DialogTitle>
+//                 </DialogHeader>
+
+//                 <form
+//                     ref={formRef}
+//                     action={formAction}
+//                     className="flex flex-col flex-1 min-h-0"
+//                 >
+//                     <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
+//                         {/* Basic Information */}
+//                         <Field>
+//                             <FieldLabel htmlFor="name">Name</FieldLabel>
+//                             <Input
+//                                 id="name"
+//                                 name="name"
+//                                 placeholder="John Doe"
+//                                 defaultValue={state?.formData?.name || user?.name || ""}
+//                             />
+//                             <InputFieldError field="name" state={state} />
+//                         </Field>
+
+//                         <Field>
+//                             <FieldLabel htmlFor="email">Email</FieldLabel>
+//                             <Input
+//                                 id="email"
+//                                 name="email"
+//                                 type="email"
+//                                 placeholder="user@example.com"
+//                                 defaultValue={state?.formData?.email || user?.email || ""}
+//                                 disabled={isPending}
+//                             />
+//                             <InputFieldError field="email" state={state} />
+//                         </Field>
+
+//                         {/* <Field>
+//                             <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
+//                             <Input
+//                                 id="contactNumber"
+//                                 name="contactNumber"
+//                                 placeholder="+1234567890"
+//                                 defaultValue={
+//                                     state?.formData?.contactNumber || user?.user?.contactNumber || ""
+//                                 }
+//                             />
+//                             <InputFieldError field="contactNumber" state={state} />
+//                         </Field> */}
+
+//                         <Field>
+//                             <FieldLabel htmlFor="address">Address</FieldLabel>
+//                             <Input
+//                                 id="address"
+//                                 name="address"
+//                                 placeholder="123 Main St, City, Country"
+//                                 defaultValue={state?.formData?.address || user?.user?.address || ""}
+//                             />
+//                             <InputFieldError field="address" state={state} />
+//                         </Field>
+//                     </div>
+
+//                     {/* Form Actions */}
+//                     <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
+//                         <Button
+//                             type="button"
+//                             variant="outline"
+//                             onClick={handleClose}
+//                             disabled={isPending}
+//                         >
+//                             Cancel
+//                         </Button>
+//                         <Button type="submit" disabled={isPending}>
+//                             {isPending ? "Saving..." : "Save Changes"}
+//                         </Button>
+//                     </div>
+//                 </form>
+//             </DialogContent>
+//         </Dialog>
+//     );
+// };
+
+// export default UserFormDialog;

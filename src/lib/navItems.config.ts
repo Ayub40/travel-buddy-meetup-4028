@@ -15,7 +15,8 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                 },
                 {
                     title: "My Profile",
-                    href: `/my-profile`,
+                    // href: `/my-profile`,
+                    href: role === "ADMIN" || role === "SUPER_ADMIN" ? "/admin/dashboard/admin-profile" : "/dashboard/my-profile",
                     icon: "User",
                     roles: ["USER", "ADMIN", "SUPER_ADMIN"],
                 },
@@ -131,17 +132,17 @@ export const adminNavItems: NavSection[] = [
             },
         ],
     },
-    {
-        title: "Payments",
-        items: [
-            {
-                title: "Payment History",
-                href: "/admin/dashboard/payments",
-                icon: "Receipt",
-                roles: ["ADMIN"],
-            },
-        ],
-    },
+    // {
+    //     title: "Payments",
+    //     items: [
+    //         {
+    //             title: "Payment History",
+    //             href: "/admin/dashboard/payments",
+    //             icon: "Receipt",
+    //             roles: ["ADMIN"],
+    //         },
+    //     ],
+    // },
 ];
 
 /* -------------------------------------------------------------------------- */

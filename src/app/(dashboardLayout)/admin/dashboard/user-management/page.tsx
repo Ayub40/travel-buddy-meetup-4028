@@ -1,11 +1,11 @@
 import UsersFilter from "@/components/modules/Admin/UsersManagement/UsersFilter";
+import UsersManagementHeader from "@/components/modules/Admin/UsersManagement/UsersManagementHeader";
 import UsersTable from "@/components/modules/Admin/UsersManagement/UsersTable";
-import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
+// import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
 import { getUsers } from "@/service/admin/userManagement";
-// import { getUsers } from "@/services/admin/usersManagement";
 import { Suspense } from "react";
 
 const AdminUsersManagementPage = async ({
@@ -23,13 +23,15 @@ const AdminUsersManagementPage = async ({
 
     return (
         <div className="space-y-6">
-            <ManagementPageHeader
+            <UsersManagementHeader />
+
+            {/* <ManagementPageHeader
                 title="Users Management"
                 description="Manage users information and details"
-            />
+            /> */}
 
             {/* Search, Filters */}
-            <UsersFilter />
+            {/* <UsersFilter /> */}
 
             <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
                 <UsersTable users={usersResult?.data || []} />

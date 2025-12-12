@@ -201,3 +201,57 @@ export async function deleteAdmin(id: string) {
         };
     }
 }
+
+
+/**
+ * UPDATE ADMIN
+ * API: PATCH /admin/:id
+ */
+export async function updateAdminSelf(id: string, _prevState: any, formData: FormData) {
+    // Validation payload
+    const validationPayload: any = {
+        name: formData.get("name") as string,
+        contactNumber: formData.get("contactNumber") as string,
+    };
+
+    // Zod validation
+    const validation = zodValidator(validationPayload, updateAdminZodSchema);
+    if (!validation.success && validation.errors) {
+        return {
+            success: validation.success,
+            message: "Validation failed",
+            formData: validationPayload,
+            errors: validation.errors,
+        };
+    }
+    if (!validation.data) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+        };
+    }
+
+    try {
+        const response = await serverFetch.patch(`/admin/${id}`, {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(validation.data),
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error: unknown) {
+        console.error("Update admin error:", error);
+
+        let message = "Failed to update admin";
+        if (error instanceof Error) {
+            message = error.message;
+        }
+
+        return {
+            success: false,
+            message,
+            formData: validationPayload
+        };
+    }
+}

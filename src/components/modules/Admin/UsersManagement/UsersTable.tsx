@@ -65,7 +65,7 @@ const UsersTable = ({ users }: UsersTableProps) => {
                 data={users}
                 columns={usersColumns}
                 onView={handleView}
-                onEdit={handleEdit}
+                // onEdit={handleEdit}
                 onDelete={handleDelete}
                 getRowKey={(user) => user.id}
                 emptyMessage="No users found"

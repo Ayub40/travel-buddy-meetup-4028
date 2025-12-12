@@ -1,7 +1,7 @@
 "use client";
 
 import { DateCell } from "@/components/shared/cell/DateCell";
-import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
+// import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
 import { UserInfoCell } from "@/components/shared/cell/UserInfoCell";
 import { Column } from "@/components/shared/ManagementTable";
 import { ITravelPlan } from "@/types/travel.interface";

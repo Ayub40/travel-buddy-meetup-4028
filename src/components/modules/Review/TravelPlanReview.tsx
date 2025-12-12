@@ -120,7 +120,7 @@ export default function TravelPlanReview({ travelPlanId, tripEnded }: Props) {
                         </div>
                     ))
                 ) : (
-                    <p>No reviews yet.</p>
+                    <p>No reviews yet. <span className="text-red-600 font-bold">Review Form Show Only When Trip was End</span></p>
                 )}
             </div>
 
