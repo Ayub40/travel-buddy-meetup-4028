@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-// import { Textarea } from "@/components/ui/textarea";
 import { getInitials } from "@/lib/formatters";
 import { updateMyProfile } from "@/service/auth/auth.service";
 import { IAdmin } from "@/types/admin.interface";
@@ -15,11 +13,12 @@ import { Camera, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { email } from "zod";
 // import PaymentsHistory from "./PaymentsHistory";
 
 interface AdminProfileProps {
     adminInfo: IAdmin;
+    // adminInfo: UserInfo;
+  
 }
 
 const MyProfile = ({ adminInfo }: AdminProfileProps) => {
@@ -99,11 +98,16 @@ const MyProfile = ({ adminInfo }: AdminProfileProps) => {
                         <CardContent className="flex flex-col items-center space-y-4">
                             <div className="relative">
                                 <Avatar className="h-32 w-32">
-                                    {previewImage || profilePhoto ? (
+                                    {profilePhoto ? (
+                                        <AvatarImage src={profilePhoto} alt={adminInfo.name} />
+                                    ) : (
+                                        <AvatarFallback>{getInitials(adminInfo.name || "USER")}</AvatarFallback>
+                                    )}
+                                    {/* {previewImage || profilePhoto ? (
                                         <AvatarImage src={previewImage || profilePhoto} alt={adminInfo.name} />
                                     ) : (
                                         <AvatarFallback className="text-3xl">{getInitials(adminInfo.name || "USER")}</AvatarFallback>
-                                    )}
+                                    )} */}
                                 </Avatar>
                                 <label htmlFor="file" className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-2 cursor-pointer hover:bg-primary/90 transition-colors">
                                     <Camera className="h-4 w-4" />

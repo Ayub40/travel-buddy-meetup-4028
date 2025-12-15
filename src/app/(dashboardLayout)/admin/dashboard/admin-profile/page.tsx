@@ -1,10 +1,10 @@
-import AdminProfile from "@/components/modules/MyProfile/AdminProfile";
+// import MyProfile from "@/components/modules/MyProfile/MyProfile";
+import MyProfile from "@/components/modules/MyProfile/AdminProfile";
 import { getUserInfo } from "@/service/auth/getUserInfo";
 
-const AdminProfilePage = async () => {
+const MyProfilePage = async () => {
     const userInfo = await getUserInfo();
-    return <AdminProfile adminInfo={userInfo} />;
+    return <MyProfile adminInfo={userInfo} />;
 };
 
-export default AdminProfilePage;
-
+export default MyProfilePage;
