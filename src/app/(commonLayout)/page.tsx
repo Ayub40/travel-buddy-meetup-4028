@@ -1,5 +1,6 @@
 import Hero from "@/components/modules/Home/Hero";
 import Steps from "@/components/modules/Home/Steps";
+import TrendingDestinations from "@/components/modules/Home/TrendingDestinations";
 import Head from "next/head";
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
         {/* Hero Section */}
         <Hero />
         <Steps />
+        <TrendingDestinations />
+
+
 
         {/* Popular Destinations */}
         {/* <TopDestinations /> */}
