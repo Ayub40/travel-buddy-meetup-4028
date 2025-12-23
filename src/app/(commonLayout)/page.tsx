@@ -1,5 +1,11 @@
+// import FeaturedTravelBuddies from "@/components/modules/Home/FeaturedTravelBuddies";
+import FAQ from "@/components/modules/Home/FAQ";
 import Hero from "@/components/modules/Home/Hero";
+import Newsletter from "@/components/modules/Home/Newsletter";
+import PopularDestinations from "@/components/modules/Home/PopularDestinations";
+import Statistics from "@/components/modules/Home/Statistics";
 import Steps from "@/components/modules/Home/Steps";
+import Testimonials from "@/components/modules/Home/Testimonials";
 import TrendingDestinations from "@/components/modules/Home/TrendingDestinations";
 import Head from "next/head";
 
@@ -19,8 +25,13 @@ export default function Home() {
       <main>
         {/* Hero Section */}
         <Hero />
+        <Statistics />
         <Steps />
         <TrendingDestinations />
+        <PopularDestinations />
+        <FAQ />
+        <Testimonials />
+        <Newsletter />
 
 
 
