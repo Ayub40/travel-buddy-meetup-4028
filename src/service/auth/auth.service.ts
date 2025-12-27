@@ -259,7 +259,6 @@ export async function getNewAccessToken() {
 
 }
 
-
 // Change Password
 export async function changePasswordAction(_prevState: any, formData: FormData) {
     const validationPayload = {

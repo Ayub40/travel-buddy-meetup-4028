@@ -7,7 +7,7 @@ const AdminDashboardLayout = ({
 }) => {
     return (
         <div>
-            <h1>Admin Dashboard -- Layout.tsx</h1>
+            {/* <h1>Admin Dashboard -- Layout.tsx</h1> */}
             {children}
         </div>
     );

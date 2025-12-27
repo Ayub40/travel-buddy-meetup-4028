@@ -23,6 +23,10 @@ export interface UserInfo {
     status: "ACTIVE" | "BLOCKED" | "DELETED";
 
     profileImage?: string;
+    profilePhoto?: string;
+    contactNumber?: string;
+
+
     bio?: string;
     age?: number;
     gender?: "MALE" | "FEMALE" | "OTHER";

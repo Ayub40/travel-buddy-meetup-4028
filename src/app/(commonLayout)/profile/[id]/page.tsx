@@ -49,7 +49,7 @@ export default function SingleProfile({ params }: { params: TParams }) {
                     className="max-w-5xl mx-auto"
                 >
    
-                    <div className="relative bg-purple-50 rounded-[3rem] p-8 md:p-12 mb-10 overflow-hidden border border-purple-100/50 group">
+                    <div className="relative bg-purple-50 rounded-xl p-8 md:p-12 mb-10 overflow-hidden border border-purple-100/50 group">
                         <div className="absolute -top-24 -right-24 w-64 h-64 bg-pink-100/50 rounded-full blur-3xl group-hover:bg-blue-100/50 transition-colors duration-700" />
                         <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-100/50 rounded-full blur-3xl" />
 
@@ -100,7 +100,7 @@ export default function SingleProfile({ params }: { params: TParams }) {
                     <div className="grid md:grid-cols-3 gap-10">
                         <div className="md:col-span-2 space-y-10">
                             {/* About Section */}
-                            <section className="bg-orange-50/30 p-8 rounded-[2.5rem] border border-orange-100/50">
+                            <section className="bg-orange-50/30 p-8 rounded-xl border border-orange-100/50">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="p-3 bg-orange-100 rounded-2xl text-orange-600">
                                         <UserIcon size={24} />
@@ -122,7 +122,7 @@ export default function SingleProfile({ params }: { params: TParams }) {
                                         <motion.span 
                                             key={i}
                                             whileHover={{ y: -5 }}
-                                            className={`${interestColors[i % interestColors.length]} px-6 py-3 rounded-2xl font-bold text-gray-700 shadow-sm border border-black/5 cursor-default hover:shadow-md transition-all`}
+                                            className={`${interestColors[i % interestColors.length]} px-6 py-3 rounded-lg font-bold text-gray-700 shadow-sm border border-black/5 cursor-default hover:shadow-md transition-all`}
                                         >
                                             # {tag}
                                         </motion.span>
@@ -136,7 +136,7 @@ export default function SingleProfile({ params }: { params: TParams }) {
                             <motion.div 
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="bg-teal-50 rounded-[2.5rem] p-8 border border-teal-100 relative overflow-hidden group"
+                                className="bg-teal-50 rounded-xl p-8 border border-teal-100 relative overflow-hidden group"
                             >
                                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
                                     <Globe size={80} />
@@ -176,12 +176,12 @@ export default function SingleProfile({ params }: { params: TParams }) {
                                     </div>
                                 </div>
 
-                                <motion.button 
+                                {/* <motion.button 
                                     whileTap={{ scale: 0.95 }}
                                     className="w-full mt-10 bg-[#9810FA] text-white py-5 rounded-[1.5rem] font-black text-lg shadow-xl shadow-purple-200 hover:bg-[#7a0cc9] transition-all"
                                 >
                                     Plan a Trip
-                                </motion.button>
+                                </motion.button> */}
                             </motion.div>
                         </div>
                     </div>

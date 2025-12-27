@@ -20,17 +20,20 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
     }, [state]);
 
 
-    const handleAutoFill = (role: "admin" | "manager" | "user") => {
+    // const handleAutoFill = (role: "admin" | "manager" | "user") => {
+    const handleAutoFill = (role: "admin" | "user") => {
         let selectedEmail = "";
         let selectedPass = "";
 
         if (role === "admin") {
             selectedEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "";
             selectedPass = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "";
-        } else if (role === "manager") {
-            selectedEmail = process.env.NEXT_PUBLIC_MANAGER_EMAIL || "";
-            selectedPass = process.env.NEXT_PUBLIC_MANAGER_PASSWORD || "";
-        } else if (role === "user") {
+        }
+        // else if (role === "manager") {
+        //     selectedEmail = process.env.NEXT_PUBLIC_MANAGER_EMAIL || "";
+        //     selectedPass = process.env.NEXT_PUBLIC_MANAGER_PASSWORD || "";
+        // }
+        else if (role === "user") {
             selectedEmail = process.env.NEXT_PUBLIC_USER_EMAIL || "";
             selectedPass = process.env.NEXT_PUBLIC_USER_PASSWORD || "";
         }
@@ -55,13 +58,13 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
                 >
                     Admin Access
                 </Button>
-                <Button
+                {/* <Button
                     type="button" variant="outline" size="sm"
                     className="bg-green-50 text-green-600 border-green-200"
                     onClick={() => handleAutoFill("manager")}
                 >
                     Manager Access
-                </Button>
+                </Button> */}
                 <Button
                     type="button" variant="outline" size="sm"
                     className="bg-pink-50 text-pink-600 border-pink-200"

@@ -1,335 +1,233 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogClose,
-} from "@/components/ui/dialog";
-
-import { getDashboardStats, updateJoinRequest } from "@/service/admin/userManagement";
-import Image from "next/image";
-// import { useRouter } from "next/navigation";
+import { getAdminAllStats } from "@/service/dashboard/dashboardManagement";
 import { useEffect, useState } from "react";
-
-interface JoinRequest {
-    id: string;
-    status: "PENDING" | "ACCEPTED" | "REJECTED";
-    user: {
-        id: string;
-        name: string;
-        profileImage?: string;
-    };
-    travelPlan: {
-        title: string,
-        destination: string;
-    };
-}
-
-interface Match {
-    id: string;
-    user: {
-        id: string;
-        name: string;
-        profileImage?: string;
-    };
-    travelPlan: {
-        id: string;
-        title: string;
-        destination: string;
-    };
-}
-
-interface UpcomingTrip {
-    id: string;
-    title: string;
-    destination: string;
-    startDate: string;
-    endDate: string;
-    joinRequests: { status: "PENDING" | "ACCEPTED" | "REJECTED" }[];
-}
-
-interface DashboardStats {
-    totalTravelPlans: number;
-    matchedCount: number;
-    totalJoinRequests: number;
-    joinRequests: JoinRequest[];
-    matches: Match[];
-    upcomingTrips: UpcomingTrip[];
-    userName: string;
-}
+import {
+    BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
+    CartesianGrid, PieChart, Pie, Cell, Legend
+} from 'recharts';
+import { Users, Map, Send, LayoutDashboard, TrendingUp } from "lucide-react";
 
 export default function AdminDashboardHome() {
-    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [stats, setStats] = useState<any>(null);
     const [loading, setLoading] = useState(true);
-    const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
 
     useEffect(() => {
         const loadData = async () => {
-            const statsRes = await getDashboardStats();
-            if (statsRes.success) setStats(statsRes.data);
+            const res = await getAdminAllStats();
+            if (res.success) setStats(res.data);
             setLoading(false);
         };
         loadData();
     }, []);
 
-    const handleAction = async (id: string, status: "ACCEPTED" | "REJECTED") => {
-        const res = await updateJoinRequest(id, status);
-        if (res.success && stats) {
-            setStats({
-                ...stats,
-                joinRequests: stats.joinRequests.map(r =>
-                    r.id === id ? { ...r, status } : r
-                ),
-                matches: status === "ACCEPTED" ? [...stats.matches, res.data] : stats.matches
-            });
-        }
-    };
+    if (loading) return (
+        <div className="flex justify-center items-center h-screen font-semibold text-gray-500">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-2"></div>
+            Loading Admin Dashboard...
+        </div>
+    );
 
-    const handleUserClick = (userId: string) => {
-        // Modal or redirect to user details page
-        console.log("Show user details for:", userId);
-    };
+    const chartData = [
+        { name: 'Users', count: stats?.totalUsers || 0 },
+        { name: 'Plans', count: stats?.totalTravelPlans || 0 },
+        { name: 'Requests', count: stats?.totalJoinRequests || 0 },
+    ];
 
-    const handleViewMatch = (matchId: string) => {
-        const match = stats?.matches.find(m => m.id === matchId) || null;
-        setSelectedMatch(match);
-    };
+    const pieData = [
+        { name: 'Users', value: stats?.totalUsers || 0 },
+        { name: 'Plans', value: stats?.totalTravelPlans || 0 },
+        { name: 'Requests', value: stats?.totalJoinRequests || 0 },
+    ];
 
-    if (loading) return <p className="text-center mt-10">Loading...</p>;
+    const COLORS = ['#3b82f6', '#10b981', '#f59e0b'];
 
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-bold mb-6">Hello 👋 {stats?.userName}</h1>
+        <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
+            <header className="mb-8">
+                <h1 className="text-3xl font-extrabold text-gray-800 flex items-center gap-2">
+                    <LayoutDashboard className="text-blue-600" /> Admin Overview
+                </h1>
+                <p className="text-gray-500 mt-1">Global platform statistics and user activity.</p>
+            </header>
 
-            {/* ---------------------- Cards ---------------------- */}
-            {stats && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white p-6 rounded-lg shadow border">
-                        <h2 className="text-gray-600 font-semibold">Your Total Travel Plans</h2>
-                        <p className="text-3xl font-bold mt-2">{stats.totalTravelPlans}</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-lg shadow border">
-                        <h2 className="text-gray-600 font-semibold">Travel Buddy Matches</h2>
-                        <p className="text-3xl font-bold mt-2">{stats.matchedCount}</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-lg shadow border">
-                        <h2 className="text-gray-600 font-semibold">Send Join Requests</h2>
-                        <p className="text-3xl font-bold mt-2">{stats.totalJoinRequests}</p>
+            {/* 1. Overview Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <StatCard
+                    title="Total Users"
+                    value={stats?.totalUsers}
+                    icon={<Users size={24} />}
+                    color="text-blue-600"
+                    bgColor="bg-blue-100"
+                />
+                <StatCard
+                    title="Total Travel Plans"
+                    value={stats?.totalTravelPlans}
+                    icon={<Map size={24} />}
+                    color="text-green-600"
+                    bgColor="bg-green-100"
+                />
+                <StatCard
+                    title="Join Requests"
+                    value={stats?.totalJoinRequests}
+                    icon={<Send size={24} />}
+                    color="text-orange-600"
+                    bgColor="bg-orange-100"
+                />
+                <StatCard
+                    title="Growth Rate"
+                    value="12%"
+                    icon={<TrendingUp size={24} />}
+                    color="text-purple-600"
+                    bgColor="bg-purple-100"
+                />
+            </div>
+
+            {/* 2. Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                {/* Bar Chart */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 className="text-lg font-bold mb-6 text-gray-700">Platform Activity</h3>
+                    <div className="h-72">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                                <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                                <YAxis axisLine={false} tickLine={false} />
+                                <Tooltip
+                                    cursor={{ fill: '#f9fafb' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                                />
+                                <Bar dataKey="count" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={50} />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
-            )}
 
-            {/* ---------------------- Join Requests ---------------------- */}
-            <h2 className="text-2xl font-bold mb-4">Join Requests</h2>
-            {stats?.joinRequests.length === 0 ? (
-                <p>No join requests found</p>
-            ) : (
-                <div className="overflow-x-auto mb-8">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="text-left p-3 border-b">User</th>
-                                <th className="text-left p-3 border-b">Title</th>
-                                <th className="text-left p-3 border-b">Destination</th>
-                                <th className="text-left p-3 border-b">Status</th>
-                                <th className="text-left p-3 border-b">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {stats?.joinRequests.map(req => (
-                                <tr key={req.id} className="hover:bg-gray-50">
-                                    <td
-                                        className="p-3 border-b flex items-center gap-2 cursor-pointer"
-                                        onClick={() => handleUserClick(req.user.id)}
-                                    >
-                                        {req.user?.profileImage ? (
-                                            <Image
-                                                src={req.user.profileImage}
-                                                alt={req.user.name || "Unknown User"}
-                                                width={32}
-                                                height={32}
-                                                className="rounded-full object-cover"
-                                            />
-                                        ) : (
-                                            <Image
-                                                src="/default-profile.png"
-                                                alt="Default User"
-                                                width={32}
-                                                height={32}
-                                                className="rounded-full object-cover"
-                                            />
-                                        )}
-                                        {req.user?.name || "Unknown User"}
-                                    </td>
-                                    <td className="p-3 border-b">{req.travelPlan.title}</td>
-                                    <td className="p-3 border-b">{req.travelPlan.destination}</td>
-                                    <td className="p-3 border-b">
-                                        <span
-                                            className={`px-3 py-1 rounded text-white text-sm ${req.status === "PENDING"
-                                                ? "bg-yellow-500"
-                                                : req.status === "ACCEPTED"
-                                                    ? "bg-green-500"
-                                                    : "bg-red-500"
-                                                }`}
-                                        >
-                                            {req.status}
-                                        </span>
-                                    </td>
-                                    <td className="p-3 border-b">
-                                        {req.status === "PENDING" && (
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => handleAction(req.id, "ACCEPTED")}
-                                                    className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
-                                                >
-                                                    Accept
-                                                </button>
-                                                <button
-                                                    onClick={() => handleAction(req.id, "REJECTED")}
-                                                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-                                                >
-                                                    Reject
-                                                </button>
-                                            </div>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-
-            {/* ---------------------- Travel Buddy Matches ---------------------- */}
-            <h2 className="text-2xl font-bold mb-4">Travel Buddy Matches</h2>
-            {stats?.matches.length === 0 ? (
-                <p>No matches yet</p>
-            ) : (
-                <div className="overflow-x-auto mb-8">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="text-left p-3 border-b">User</th>
-                                <th className="text-left p-3 border-b">Trip Title</th>
-                                <th className="text-left p-3 border-b">Destination</th>
-                                <th className="text-left p-3 border-b">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {stats?.matches.map(match => (
-                                <tr key={match.id} className="hover:bg-gray-50">
-                                    <td
-                                        className="p-3 border-b flex items-center gap-2 cursor-pointer"
-                                        onClick={() => handleUserClick(match.user.id)}
-                                    >
-                                        {
-                                            match.user.profileImage && (
-                                                <Image
-                                                    src={match.user.profileImage}
-                                                    alt="Default User"
-                                                    width={32}
-                                                    height={32}
-                                                    className="rounded-full object-cover"
-                                                />
-                                            )
-                                        }
-                                    </td>
-                                    <td className="p-3 border-b">{match.travelPlan.title}</td>
-                                    <td className="p-3 border-b">{match.travelPlan.destination}</td>
-                                    <td className="p-3 border-b">
-                                        <button
-                                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
-                                            onClick={() => handleViewMatch(match.id)}
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-
-            {/* ---------------------- Upcoming Trips ---------------------- */}
-            <h2 className="text-2xl font-bold mt-8 mb-4">Upcoming Trips</h2>
-            {stats?.upcomingTrips.length === 0 ? (
-                <p>No upcoming trips</p>
-            ) : (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="text-left p-3 border-b">Title</th>
-                                <th className="text-left p-3 border-b">Destination</th>
-                                <th className="text-left p-3 border-b">Start Date</th>
-                                <th className="text-left p-3 border-b">End Date</th>
-                                <th className="text-left p-3 border-b">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {stats?.upcomingTrips.map(trip => (
-                                <tr key={trip.id} className="hover:bg-gray-50">
-                                    <td className="p-3 border-b">{trip.title}</td>
-                                    <td className="p-3 border-b">{trip.destination}</td>
-                                    <td className="p-3 border-b">{new Date(trip.startDate).toLocaleDateString()}</td>
-                                    <td className="p-3 border-b">{new Date(trip.endDate).toLocaleDateString()}</td>
-                                    <td className="p-3 border-b">
-                                        {trip.joinRequests.length === 0 ? (
-                                            <span className="px-3 py-1 rounded text-white text-sm bg-gray-400">No Requests</span>
-                                        ) : (
-                                            trip.joinRequests.map((r, idx) => (
-                                                <span
-                                                    key={idx}
-                                                    className={`px-3 py-1 rounded text-white text-sm mr-1 ${r.status === "PENDING"
-                                                        ? "bg-yellow-500"
-                                                        : r.status === "ACCEPTED"
-                                                            ? "bg-green-500"
-                                                            : "bg-red-500"
-                                                        }`}
-                                                >
-                                                    {r.status}
-                                                </span>
-                                            ))
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-
-            {/* ---------------------- Modal for Selected Match ---------------------- */}
-            <Dialog open={!!selectedMatch} onOpenChange={() => setSelectedMatch(null)}>
-                <DialogContent className="sm:max-w-md w-full">
-                    <DialogHeader>
-                        <DialogTitle>{selectedMatch?.travelPlan.title}</DialogTitle>
-                    </DialogHeader>
-
-                    <div className="mt-2 space-y-2">
-                        <p><strong>Destination:</strong> {selectedMatch?.travelPlan.destination}</p>
-                        <p><strong>User:</strong> {selectedMatch?.user.name}</p>
-                        <div className="flex justify-center mt-2">
-                            <Image
-                                src={selectedMatch?.user.profileImage || "/default-profile.png"}
-                                alt={selectedMatch?.user.name || "Default User"}
-                                width={64}
-                                height={64}
-                                className="rounded-full object-cover"
-                            />
-                        </div>
+                {/* Pie Chart */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 className="text-lg font-bold mb-6 text-gray-700">Data Distribution</h3>
+                    <div className="h-72">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <Pie
+                                    data={pieData}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={70}
+                                    outerRadius={90}
+                                    paddingAngle={8}
+                                    dataKey="value"
+                                >
+                                    {pieData.map((_, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                                <Legend verticalAlign="bottom" height={36} />
+                            </PieChart>
+                        </ResponsiveContainer>
                     </div>
-
-                    <DialogClose asChild>
-                        <button className="mt-4 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition">
-                            Close
-                        </button>
-                    </DialogClose>
-                </DialogContent>
-            </Dialog>
+                </div>
+            </div>
         </div>
     );
 }
+
+// Sub-component: Stat Card
+function StatCard({ title, value, icon, color, bgColor }: any) {
+    return (
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 transition-all hover:scale-[1.02] hover:shadow-md cursor-default">
+            <div className={`${bgColor} ${color} p-4 rounded-2xl`}>
+                {icon}
+            </div>
+            <div>
+                <p className="text-gray-500 text-xs font-bold uppercase tracking-wider">{title}</p>
+                <p className="text-2xl font-black text-gray-800 mt-0.5">{value || 0}</p>
+            </div>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// "use client";
+// import { getAdminAllStats } from "@/service/dashboard/dashboardManagement";
+// import { useEffect, useState } from "react";
+// import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+
+// export default function AdminDashboardHome() {
+//     const [stats, setStats] = useState<any>(null);
+//     const [loading, setLoading] = useState(true);
+
+//     useEffect(() => {
+//         const loadData = async () => {
+//             const res = await getAdminAllStats();
+//             if (res.success) setStats(res.data);
+//             setLoading(false);
+//         };
+//         loadData();
+//     }, []);
+
+//     if (loading) return <p className="text-center p-10">Loading Admin Dashboard...</p>;
+
+//     const chartData = [
+//         { name: 'Users', count: stats?.totalUsers },
+//         { name: 'Plans', count: stats?.totalTravelPlans },
+//         { name: 'Requests', count: stats?.totalJoinRequests },
+//         // { name: 'Payments', count: stats?.totalPayments },
+//     ];
+
+//     return (
+//         <div className="p-8 bg-gray-50 min-h-screen">
+//             <h1 className="text-2xl font-bold mb-6">Admin Overview</h1>
+
+//             {/* Overview Cards */}
+//             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+//                 <StatCard title="Total Users" value={stats?.totalUsers} color="bg-blue-500" />
+//                 <StatCard title="Total Plans" value={stats?.totalTravelPlans} color="bg-green-500" />
+//                 <StatCard title="Join Requests" value={stats?.totalJoinRequests} color="bg-orange-500" />
+//                 {/* <StatCard title="Payments" value={stats?.totalPayments} color="bg-purple-500" /> */}
+//             </div>
+
+//             {/* Chart Section */}
+//             <div className="bg-white p-6 rounded-lg shadow-sm border h-80">
+//                 <h3 className="text-lg font-semibold mb-4">Platform Statistics</h3>
+//                 <ResponsiveContainer width="100%" height="100%">
+//                     <BarChart data={chartData}>
+//                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
+//                         <XAxis dataKey="name" />
+//                         <YAxis />
+//                         <Tooltip />
+//                         <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+//                     </BarChart>
+//                 </ResponsiveContainer>
+//             </div>
+//         </div>
+//     );
+// }
+
+// function StatCard({ title, value, color }: any) {
+//     return (
+//         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+//             <span className="text-gray-500 text-sm font-medium">{title}</span>
+//             <span className={`text-4xl font-bold mt-2 ${color.replace('bg-', 'text-')}`}>{value}</span>
+//         </div>
+//     );
+// }
+

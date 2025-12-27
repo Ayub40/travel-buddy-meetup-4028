@@ -10,8 +10,17 @@ import Link from "next/link";
 export default function Hero({ statsResponse }: { statsResponse: any }) {
   // console.log("Hero Stats:", statsResponse)
 
-  const statsArray = statsResponse?.data || [];
-  const activeUserImages = statsResponse?.data?.activeUserImages || [];
+  // const statsArray = statsResponse?.data || [];
+  // const activeUserImages = statsResponse?.data?.activeUserImages || [];
+
+  const statsArray = Array.isArray(statsResponse?.data?.stats)
+    ? statsResponse.data.stats
+    : [];
+
+  const activeUserImages = Array.isArray(statsResponse?.data?.activeUserImages)
+    ? statsResponse.data.activeUserImages
+    : [];
+
 
   // const statsArray = statsResponse?.data?.stats || [];
   // const activeUserImages = statsResponse?.data?.activeUserImages || [];
@@ -21,10 +30,14 @@ export default function Hero({ statsResponse }: { statsResponse: any }) {
   const destinations = statsArray.find((s: any) => s.label === "Destinations")?.value || 0;
   const countries = statsArray.find((s: any) => s.label === "Countries")?.value || 0;
 
-
   console.log("FULL RESPONSE:", statsResponse);
+  console.log("DATA:", statsResponse?.data);
   console.log("STATS:", statsResponse?.data?.stats);
-  console.log("IMAGES:", statsResponse?.data?.activeUserImages);
+  console.log("IS ARRAY:", Array.isArray(statsResponse?.data?.stats));
+
+  // console.log("FULL RESPONSE:", statsResponse);
+  // console.log("STATS:", statsResponse?.data?.stats);
+  // console.log("IMAGES:", statsResponse?.data?.activeUserImages);
 
 
 

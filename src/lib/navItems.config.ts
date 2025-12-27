@@ -8,7 +8,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
         {
             items: [
                 {
-                    title: "Dashboard",
+                    title: "Overview",
                     href: defaultDashboard,
                     icon: "LayoutDashboard",
                     roles: ["USER", "ADMIN", "SUPER_ADMIN"],
@@ -50,12 +50,35 @@ export const userNavItems: NavSection[] = [
                 icon: "Calendar",
                 roles: ["USER"],
             },
+            {
+                title: "Upcoming Trips",
+                href: "/dashboard/upcoming-trips",
+                icon: "Plane",
+                roles: ["USER"],
+            },
             // {
             //     title: "Create New Plan",
             //     href: "/dashboard/travel-plans/add",
             //     icon: "PlusCircle",
             //     roles: ["USER"],
             // },
+        ],
+    },
+    {
+        title: "Connections",
+        items: [
+            {
+                title: "Join Requests",
+                href: "/dashboard/join-requests",
+                icon: "UserPlus",
+                roles: ["USER"],
+            },
+            {
+                title: "Travel Buddy Matches",
+                href: "/dashboard/travel-buddy-matches",
+                icon: "Users",
+                roles: ["USER"],
+            },
         ],
     },
     // {
@@ -128,6 +151,24 @@ export const adminNavItems: NavSection[] = [
                 title: "All Travel Plans",
                 href: "/admin/dashboard/travel-management",
                 icon: "MapPin",
+                roles: ["ADMIN"],
+            },
+            {
+                title: "Join Requests",
+                href: "/admin/dashboard/join-requests",
+                icon: "UserPlus",
+                roles: ["ADMIN"],
+            },
+            {
+                title: "Travel Buddy Matches",
+                href: "/admin/dashboard/travel-buddy-matches",
+                icon: "Users",
+                roles: ["ADMIN"],
+            },
+            {
+                title: "Upcoming Trips",
+                href: "/admin/dashboard/upcoming-trips",
+                icon: "Calendar",
                 roles: ["ADMIN"],
             },
         ],
