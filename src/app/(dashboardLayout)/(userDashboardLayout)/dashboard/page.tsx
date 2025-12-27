@@ -16,7 +16,27 @@ import {
 } from 'recharts';
 import { Briefcase, Users, Send, Calendar, CheckCircle, XCircle, Eye } from "lucide-react";
 
-// Interfaces
+
+const DashboardSkeleton = () => (
+    <div className="p-4 md:p-8 bg-gray-50 min-h-screen animate-pulse">
+        <div className="mb-8">
+            <div className="h-8 w-48 bg-gray-200 rounded-lg mb-2" />
+            <div className="h-4 w-64 bg-gray-200 rounded-lg" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {[1, 2, 3].map((i) => (
+                <div key={i} className="h-28 bg-white rounded-2xl border border-gray-100 shadow-sm" />
+            ))}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+            <div className="h-80 bg-white rounded-xl border border-gray-200" />
+            <div className="h-80 bg-white rounded-xl border border-gray-200" />
+        </div>
+        <div className="h-64 bg-white rounded-xl border border-gray-200" />
+    </div>
+);
+
+
 interface JoinRequest {
     id: string;
     status: "PENDING" | "ACCEPTED" | "REJECTED";
@@ -98,12 +118,8 @@ export default function DashboardHome() {
         setSelectedMatch(match);
     };
 
-    if (loading) return (
-        <div className="flex justify-center items-center h-screen font-semibold text-gray-500">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-2"></div>
-            Loading Dashboard Data...
-        </div>
-    );
+
+    if (loading) return <DashboardSkeleton />;
 
     // Chart Data Preparation
     const barData = [
@@ -220,14 +236,13 @@ export default function DashboardHome() {
 
             {/* 4. Buddy Matches & Upcoming Trips */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                {/* Matches Section */}
                 <div>
                     <div className="flex items-center gap-2 mb-4">
                         <Users className="text-green-500" size={20} />
                         <h2 className="text-xl font-bold text-gray-800">Recent Matches</h2>
                     </div>
                     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-2">
-                        {stats?.matches.length === 0 ? <p className="p-6 text-gray-400 text-center">No matches found</p> : 
+                        {stats?.matches.length === 0 ? <p className="p-6 text-gray-400 text-center">No matches found</p> :
                             stats?.matches.slice(0, 5).map(match => (
                                 <div key={match.id} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg border-b last:border-0">
                                     <div className="flex items-center gap-3">
@@ -244,7 +259,6 @@ export default function DashboardHome() {
                     </div>
                 </div>
 
-                {/* Upcoming Trips Section */}
                 <div>
                     <div className="flex items-center gap-2 mb-4">
                         <Calendar className="text-blue-500" size={20} />
@@ -266,12 +280,11 @@ export default function DashboardHome() {
                 </div>
             </div>
 
-            {/* Modal for View Detail */}
             <Dialog open={!!selectedMatch} onOpenChange={() => setSelectedMatch(null)}>
                 <DialogContent className="sm:max-w-md bg-white p-0 overflow-hidden rounded-2xl">
                     <div className="bg-blue-600 h-24 flex items-end justify-center pb-4">
                         <div className="bg-white p-1 rounded-full translate-y-8 shadow-lg">
-                           <Image src={selectedMatch?.user.profileImage || "/default-profile.png"} alt="user" width={80} height={80} className="rounded-full object-cover" />
+                            <Image src={selectedMatch?.user.profileImage || "/default-profile.png"} alt="user" width={80} height={80} className="rounded-full object-cover" />
                         </div>
                     </div>
                     <div className="pt-12 pb-8 px-6 text-center">
@@ -291,7 +304,6 @@ export default function DashboardHome() {
     );
 }
 
-// Sub-component: Stat Card
 function StatCard({ title, value, icon, color, bgColor }: any) {
     return (
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 transition-all hover:shadow-md">
@@ -305,7 +317,6 @@ function StatCard({ title, value, icon, color, bgColor }: any) {
         </div>
     );
 }
-
 
 
 

@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+   /* eslint-disable @typescript-eslint/no-explicit-any */
+   
 "use client";
 import { getAdminAllStats } from "@/service/dashboard/dashboardManagement";
 import { useEffect, useState } from "react";
@@ -7,6 +8,25 @@ import {
     CartesianGrid, PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { Users, Map, Send, LayoutDashboard, TrendingUp } from "lucide-react";
+
+
+const AdminDashboardSkeleton = () => (
+    <div className="p-4 md:p-8 bg-gray-50 min-h-screen animate-pulse">
+        <header className="mb-8">
+            <div className="h-10 w-64 bg-gray-200 rounded-lg mb-2" />
+            <div className="h-4 w-80 bg-gray-200 rounded-lg" />
+        </header>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-28 bg-white rounded-2xl border border-gray-100" />
+            ))}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            <div className="h-80 bg-white rounded-2xl border border-gray-200" />
+            <div className="h-80 bg-white rounded-2xl border border-gray-200" />
+        </div>
+    </div>
+);
 
 export default function AdminDashboardHome() {
     const [stats, setStats] = useState<any>(null);
@@ -21,12 +41,8 @@ export default function AdminDashboardHome() {
         loadData();
     }, []);
 
-    if (loading) return (
-        <div className="flex justify-center items-center h-screen font-semibold text-gray-500">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-2"></div>
-            Loading Admin Dashboard...
-        </div>
-    );
+    
+    if (loading) return <AdminDashboardSkeleton />;
 
     const chartData = [
         { name: 'Users', count: stats?.totalUsers || 0 },
@@ -148,18 +164,6 @@ function StatCard({ title, value, icon, color, bgColor }: any) {
         </div>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -6,14 +6,14 @@ import { matchTravelPlans } from "@/service/admin/travelPlanManagement";
 import TablePagination from "@/components/shared/TablePagination";
 import { useSearchParams } from "next/navigation";
 import TravelBuddyFilter from "@/components/modules/Travel/TravelBuddyFilter";
-import TravelBuddyCard from "@/components/modules/Travel/TravelBuddyCard";
-import { Loader2, Ghost } from "lucide-react";
+import TravelBuddyCard, { TravelBuddySkeleton } from "@/components/modules/Travel/TravelBuddyCard"; 
+import { Ghost } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const FindTravelBuddy = () => {
     const searchParams = useSearchParams();
     const currentPageParam = Number(searchParams.get("page") || 1);
-    const limitParam = Number(searchParams.get("limit") || 6); 
+    const limitParam = Number(searchParams.get("limit") || 6);
 
     const [travelPlans, setTravelPlans] = useState<ITravelPlan[]>([]);
     const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ const FindTravelBuddy = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             fetchPlans();
-        }, 500); // Debounce fetch for better performance
+        }, 500);
         return () => clearTimeout(timer);
     }, [fetchPlans]);
 
@@ -62,7 +62,7 @@ const FindTravelBuddy = () => {
         <div className="min-h-screen bg-gray-50/50 dark:bg-slate-950 pb-20">
             <div className="container mx-auto px-4 sm:px-6">
 
-                {/* Header Title Section */}
+             
                 <div className="pt-10 pb-2 text-center">
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-2">
                         Find Your <span className="text-blue-600">Travel Buddy</span>
@@ -70,7 +70,7 @@ const FindTravelBuddy = () => {
                     <p className="text-slate-500 font-medium">Explore the world together. Safe, fun, and memorable.</p>
                 </div>
 
-                {/* Filter Component */}
+              
                 <TravelBuddyFilter
                     destination={destination} setDestination={setDestination}
                     country={country} setCountry={setCountry}
@@ -83,28 +83,37 @@ const FindTravelBuddy = () => {
                     }}
                 />
 
-                {/* Content Section */}
+               
                 <AnimatePresence mode="wait">
                     {loading ? (
+                      
                         <motion.div
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                            className="flex flex-col items-center justify-center py-20"
+                            key="loader"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                         >
-                            <Loader2 className="animate-spin text-blue-600 mb-4" size={48} />
-                            <p className="text-slate-500 font-bold animate-pulse tracking-widest uppercase text-xs">Matching plans for you...</p>
+                            {Array.from({ length: 6 }).map((_, i) => (
+                                <TravelBuddySkeleton key={i} />
+                            ))}
                         </motion.div>
                     ) : travelPlans.length === 0 ? (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-                            className="text-center py-20 bg-white rounded-4xl shadow-sm border border-dashed border-gray-200"
+                            key="empty"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="text-center py-20 bg-white dark:bg-slate-900 rounded-4xl shadow-sm border border-dashed border-gray-200 dark:border-slate-800"
                         >
                             <Ghost className="mx-auto text-gray-300 mb-4" size={64} />
-                            <h3 className="text-xl font-bold text-slate-700">No travel buddies found</h3>
+                            <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200">No travel buddies found</h3>
                             <p className="text-slate-500">Try changing your filters or search terms.</p>
                         </motion.div>
                     ) : (
                         <motion.div
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                            key="content"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
                             className="space-y-10"
                         >
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -131,3 +140,4 @@ const FindTravelBuddy = () => {
 };
 
 export default FindTravelBuddy;
+

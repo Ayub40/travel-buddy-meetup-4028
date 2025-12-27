@@ -18,6 +18,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+
+export const TravelBuddySkeleton = () => (
+    <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-xl overflow-hidden flex flex-col h-full animate-pulse">
+        <div className="h-64 w-full bg-gray-200 dark:bg-slate-800" />
+        <div className="p-7 space-y-6">
+            <div className="space-y-3">
+                <div className="h-7 bg-gray-200 dark:bg-slate-800 rounded-lg w-3/4" />
+                <div className="h-4 bg-gray-200 dark:bg-slate-800 rounded-lg w-full" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-16 bg-gray-100 dark:bg-slate-800/50 rounded-2xl" />
+                ))}
+            </div>
+            <div className="h-14 bg-gray-200 dark:bg-slate-800 rounded-2xl w-full" />
+        </div>
+    </div>
+);
+
 interface TravelBuddyCardProps {
     plan: ITravelPlan;
 }
@@ -57,10 +76,8 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                {/* Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
-                {/* Badges */}
                 <div className="absolute top-5 left-5 flex flex-wrap gap-2">
                     <Badge className="bg-blue-600/90 backdrop-blur-md border-none px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase">
                         {plan.travelType}
@@ -73,7 +90,6 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
 
             {/* --- Content Section --- */}
             <div className="p-7 flex-grow flex flex-col">
-                {/* Title & Description */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-1 group-hover:text-blue-600 transition-colors">
                         {plan.title}
@@ -83,62 +99,48 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
                     </p>
                 </div>
 
-                {/* Info Grid with Your Specified Colors */}
+                {/* Info Grid */}
                 <div className="grid grid-cols-2 gap-4 mb-5">
-                    {/* Destination */}
-                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-blue-50 transition-colors hover:bg-blue-100/50">
-                        <div className="p-2 bg-white rounded-xl text-blue-600 shadow-sm">
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/20 transition-colors hover:bg-blue-100/50">
+                        <div className="p-2 bg-white dark:bg-slate-800 rounded-xl text-blue-600 shadow-sm">
                             <MapPin size={18} />
                         </div>
                         <div className="min-w-0">
                             <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">Place</p>
-                            <p className="text-xs font-bold text-slate-700 truncate">{plan.destination}</p>
+                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate">{plan.destination}</p>
                         </div>
                     </div>
 
-                    {/* Budget */}
-                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-green-50 transition-colors hover:bg-green-100/50">
-                        <div className="p-2 bg-white rounded-xl text-green-600 shadow-sm">
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-green-50 dark:bg-green-900/20 transition-colors hover:bg-green-100/50">
+                        <div className="p-2 bg-white dark:bg-slate-800 rounded-xl text-green-600 shadow-sm">
                             <Wallet size={18} />
                         </div>
                         <div>
                             <p className="text-[10px] font-bold text-green-400 uppercase tracking-tighter">Budget</p>
-                            <p className="text-xs font-bold text-slate-700">{plan.budget ? `৳${plan.budget}` : "Flexible"}</p>
+                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">{plan.budget ? `৳${plan.budget}` : "Flexible"}</p>
                         </div>
                     </div>
 
-                    {/* Date */}
-                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-pink-50 transition-colors hover:bg-pink-100/50">
-                        <div className="p-2 bg-white rounded-xl text-pink-600 shadow-sm">
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-pink-50 dark:bg-pink-900/20 transition-colors hover:bg-pink-100/50">
+                        <div className="p-2 bg-white dark:bg-slate-800 rounded-xl text-pink-600 shadow-sm">
                             <Calendar size={18} />
                         </div>
                         <div className="min-w-0">
                             <p className="text-[10px] font-bold text-pink-400 uppercase tracking-tighter">Date</p>
-                            <p className="text-xs font-bold text-slate-700 truncate">
+                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate">
                                 {plan.startDate ? formatDateTime(new Date(plan.startDate)) : "TBA"}
                             </p>
                         </div>
                     </div>
 
-                    {/* Host */}
-                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-purple-50 transition-colors hover:bg-purple-100/50">
-                        <div className="p-2 bg-white rounded-xl text-purple-600 shadow-sm">
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-purple-50 dark:bg-purple-900/20 transition-colors hover:bg-purple-100/50">
+                        <div className="p-2 bg-white dark:bg-slate-800 rounded-xl text-purple-600 shadow-sm">
                             <User size={18} />
                         </div>
                         <div className="min-w-0">
                             <p className="text-[10px] font-bold text-purple-400 uppercase tracking-tighter">Host</p>
-                            <p className="text-xs font-bold text-slate-700 truncate">{plan.user?.name || "Member"}</p>
+                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate">{plan.user?.name || "Member"}</p>
                         </div>
-                    </div>
-                </div>
-                {/* Host Email */}
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-purple-50 transition-colors hover:bg-purple-100/50 mb-3">
-                    <div className="p-2 bg-white rounded-xl text-purple-600 shadow-sm">
-                        <User size={18} />
-                    </div>
-                    <div className="min-w-0">
-                        <p className="text-[10px] font-bold text-purple-400 uppercase tracking-tighter">Host</p>
-                        <p className="text-xs font-bold text-slate-700 truncate">{plan.user?.email || "Member"}</p>
                     </div>
                 </div>
 
@@ -153,7 +155,7 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
                     </Button>
 
                     <Link href={`/allTravelPlan/travelPlan/${plan.id}`} className="w-full">
-                        <Button variant="ghost" className="w-full text-slate-500 hover:text-blue-600 hover:bg-blue-50 py-6 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all">
+                        <Button variant="ghost" className="w-full text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 py-6 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all">
                             View Full Details
                             <ArrowRight size={18} />
                         </Button>
