@@ -1,6 +1,6 @@
 # Travel Buddy Frontend
 
-**Live Demo:** [[Add your live URL here](https://travel-buddy-meetup-4028.vercel.app)]
+**Live Demo:** [[Live URL here](https://travel-buddy-meetup-4028.vercel.app)]
 
 The **Travel Buddy Frontend** is a modern, responsive, and interactive web application built with Next.js and TailwindCSS. It allows users to explore travel plans, join trips, leave reviews, and manage their profile seamlessly.
 
