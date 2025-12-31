@@ -25,7 +25,7 @@ const TravelBuddyFilter = ({
     onClear,
 }: TravelBuddyFilterProps) => {
     return (
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-4xl shadow-xl border border-gray-100 dark:border-slate-800 mb-8 mt-6">
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-4xl shadow-md border border-gray-100 dark:border-slate-800 mb-8 mt-6">
             <div className="flex items-center gap-2 mb-4 text-blue-600">
                 <Search size={20} />
                 <h3 className="font-bold uppercase tracking-widest text-sm">Search Your Buddy</h3>
@@ -37,7 +37,7 @@ const TravelBuddyFilter = ({
                     <Map size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                     <input
                         type="text"
-                        placeholder="Destination"
+                        placeholder="Destination (Place)"
                         className="w-full pl-11 pr-4 py-3 rounded-2xl bg-blue-50/50 border-none focus:ring-2 focus:ring-blue-500 transition-all outline-none text-sm font-medium"
                         value={destination}
                         onChange={(e) => setDestination(e.target.value)}

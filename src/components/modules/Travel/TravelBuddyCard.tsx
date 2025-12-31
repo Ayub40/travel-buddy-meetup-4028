@@ -65,7 +65,7 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
             viewport={{ once: true }}
             whileHover={{ y: -8 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full"
+            className="group bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full"
         >
             {/* --- Image Section --- */}
             <div className="relative h-64 w-full overflow-hidden">
