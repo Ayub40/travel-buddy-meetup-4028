@@ -34,33 +34,33 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
     const changeLimit = (newLimit: string) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("limit", newLimit);
-        params.set("page", "1"); // Reset to first page when changing limit
-
+        params.set("page", "1");
         startTransition(() => {
             router.push(`?${params.toString()}`);
         });
     };
 
-    // defult e 10 ta show korbe
+
     const currentLimit = searchParams.get("limit") || "10";
 
-    // if (totalPages <= 1) {
-    //   return null;
-    // }
-
     return (
-        <div className="flex items-center justify-center gap-2">
+
+        <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+
             <Button
                 variant="outline"
                 size="sm"
                 onClick={() => navigateToPage(currentPage - 1)}
                 disabled={currentPage <= 1 || isPending}
+
+                className="px-2 sm:px-3"
             >
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 Previous
             </Button>
 
-            <div className="flex items-center gap-1">
+
+            <div className="flex flex-wrap items-center justify-center gap-1">
                 {Array.from({ length: Math.min(5, totalPages) }, (_, index) => {
                     let pageNumber;
 
@@ -73,6 +73,7 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
                     } else {
                         pageNumber = currentPage - 2 + index;
                     }
+
                     return (
                         <Button
                             key={pageNumber}
@@ -80,7 +81,8 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
                             size="sm"
                             onClick={() => navigateToPage(pageNumber)}
                             disabled={isPending}
-                            className="w-10"
+                            className="w-9 h-9 sm:w-10 sm:h-10"
+
                         >
                             {pageNumber}
                         </Button>
@@ -88,30 +90,34 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
                 })}
             </div>
 
+
             <Button
                 variant="outline"
                 size="sm"
                 onClick={() => navigateToPage(currentPage + 1)}
                 disabled={currentPage === totalPages || isPending}
+                className="px-2 sm:px-3"
             >
                 Next
                 <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
 
-            <span className="text-sm text-muted-foreground ml-2">
-                {/* Page 9 of 20 */}
+
+            <span className="text-xs sm:text-sm text-muted-foreground text-center">
                 Page {currentPage} of {totalPages}
             </span>
 
-            {/* Items per page selector */}
             <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Items per page:</span>
+                <span className="text-xs sm:text-sm text-muted-foreground">
+                    Items:
+                </span>
+
                 <Select
                     value={currentLimit}
                     onValueChange={changeLimit}
                     disabled={isPending}
                 >
-                    <SelectTrigger className="w-[70px] h-8">
+                    <SelectTrigger className="w-[65px] sm:w-[70px] h-8">
                         <SelectValue />
                     </SelectTrigger>
                     <SelectContent>

@@ -1,37 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import Image from "next/image";
-// import Link from "next/link";
-
-// export default function TravelCard({ plan }: { plan: any }) {
-//     return (
-//         <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
-//             <div className="w-full h-40 relative mb-3 rounded overflow-hidden">
-//                 <Image
-//                     src={plan.photos?.[0] || "/placeholder.jpg"}
-//                     alt={plan.title}
-//                     fill
-//                     className="object-cover"
-//                 />
-//             </div>
-
-//             <h3 className="font-bold text-lg">{plan.title}</h3>
-//             <p>{plan.destination}, {plan.country}</p>
-//             <p>
-//                 {new Date(plan.startDate).toLocaleDateString()} -{" "}
-//                 {new Date(plan.endDate).toLocaleDateString()}
-//             </p>
-//             <Link
-//                 href={`/allTravelPlan/travelPlan/${plan.id}`}
-//                 className="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-//             >
-//                 View Details
-//             </Link>
-//         </div>
-//     );
-// }
-
-
 
 "use client";
 
@@ -64,15 +31,13 @@ export default function TravelCard({ plan }: TravelCardProps) {
             transition={{ duration: 0.3 }}
         >
             <Card className="overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-300 bg-white group h-full flex flex-col">
-                {/* Image Section */}
-                <div className="relative w-full h-56 overflow-hidden">
+                <div className="relative w-full h-48 sm:h-52 md:h-56 overflow-hidden">
                     <Image
                         src={plan.photos?.[0] || "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=800&auto=format&fit=crop"}
                         alt={plan.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    {/* Badge for Travel Type */}
                     <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-blue-600/90 hover:bg-blue-600 backdrop-blur-md border-none">
                             {plan.travelType}
@@ -84,7 +49,6 @@ export default function TravelCard({ plan }: TravelCardProps) {
                         )}
                     </div>
 
-                    {/* Overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
@@ -97,15 +61,16 @@ export default function TravelCard({ plan }: TravelCardProps) {
                         </span>
                     </div>
 
-                    <h3 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-bold text-lg sm:text-xl mb-2 text-gray-800 line-clamp-1 group-hover:text-blue-600 transition-colors">
                         {plan.title}
                     </h3>
 
-                    <p className="text-gray-500 text-sm line-clamp-2 mb-4">
+                    <p className="text-gray-500 text-xs sm:text-sm line-clamp-2 mb-4">
                         {plan.description || "Join this amazing journey and explore the hidden gems of this beautiful location with a verified buddy."}
                     </p>
 
-                    <div className="flex items-center justify-between text-gray-600 text-xs border-t pt-4">
+
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-gray-600 text-xs border-t pt-4">
                         <div className="flex items-center gap-1">
                             <Calendar size={14} className="text-blue-500" />
                             <span>{formatDate(plan.startDate)} - {formatDate(plan.endDate)}</span>
@@ -120,7 +85,7 @@ export default function TravelCard({ plan }: TravelCardProps) {
                 {/* Footer Section */}
                 <CardFooter className="p-5 pt-0">
                     <Link href={`/allTravelPlan/travelPlan/${plan.id}`} className="w-full">
-                        <Button className="w-full bg-slate-900 hover:bg-blue-600 text-white transition-all duration-300 group-hover:gap-3">
+                        <Button className="w-full text-sm sm:text-base bg-slate-900 hover:bg-blue-600 text-white transition-all duration-300 group-hover:gap-3">
                             View Details
                             <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
                         </Button>
@@ -130,44 +95,3 @@ export default function TravelCard({ plan }: TravelCardProps) {
         </motion.div>
     );
 }
-
-
-
-
-
-
-// "use client";
-
-// import Image from "next/image";
-// import Link from "next/link";
-
-// interface TravelCardProps {
-//     plan: any;
-// }
-
-// export default function TravelCard({ plan }: TravelCardProps) {
-//     return (
-//         <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
-//             <div className="relative w-full h-40 mb-3 rounded overflow-hidden">
-//                 <Image
-//                     src={plan.photos?.[0] || "/placeholder.jpg"}
-//                     alt={plan.title}
-//                     fill
-//                     className="object-cover"
-//                 />
-//             </div>
-//             <h3 className="font-bold text-lg">{plan.title}</h3>
-//             <p>{plan.destination}, {plan.country}</p>
-//             <p>
-//                 {new Date(plan.startDate).toLocaleDateString()} -{" "}
-//                 {new Date(plan.endDate).toLocaleDateString()}
-//             </p>
-//             <Link
-//                 href={`/allTravelPlan/travelPlan/${plan.id}`}
-//                 className="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-//             >
-//                 View Details
-//             </Link>
-//         </div>
-//     );
-// }

@@ -29,13 +29,12 @@ async function PlansContent({
                 Explore All Travel Plans
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-5">
                 {travelPlans.map((plan: any) => (
                     <TravelCard key={plan.id} plan={plan} />
                 ))}
             </div>
 
-            {/* Table + Pagination */}
             <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
                 <TablePagination
                     currentPage={travelPlansResult?.meta?.page || 1}
