@@ -6,7 +6,7 @@ import { IReview, IReviewCreate } from "@/types/review.interface";
 // import { IReviewFormData } from "@/types/review.interface";
 
 /* -----------------------------------------
-   ✅ 1) Get Reviews of a Travel Plan
+    Get Reviews of a Travel Plan
 ------------------------------------------ */
 // reviews.service.ts
 export async function getReviewsByPlan(travelPlanId: string, userEmail?: string) {
@@ -35,28 +35,8 @@ export async function getReviewsByPlan(travelPlanId: string, userEmail?: string)
 }
 
 
-// export async function getReviewsByPlan(travelPlanId: string) {
-//     try {
-//         const response = await serverFetch.get(`/reviews/plan/${travelPlanId}`);
-//         const result = await response.json();
-
-//         return {
-//             success: true,
-//             data: result.data,
-//             meta: result.meta,
-//         };
-//     } catch (error: any) {
-//         console.error("Get reviews error:", error);
-//         return {
-//             success: false,
-//             message: error.message || "Failed to fetch reviews",
-//             data: null,
-//         };
-//     }
-// }
-
 /* -----------------------------------------
-   ✅ 2) Get My Reviews
+  Get My Reviews
 ------------------------------------------ */
 export async function getMyReviews() {
     try {
@@ -79,7 +59,7 @@ export async function getMyReviews() {
 }
 
 /* -----------------------------------------
-   ✅ 3) Create Review
+   Create Review
 ------------------------------------------ */
 export async function createReview(travelPlanId: string, data: IReviewCreate) {
     try {
@@ -105,7 +85,7 @@ export async function createReview(travelPlanId: string, data: IReviewCreate) {
 }
 
 /* -----------------------------------------
-   ✅ 4) Update Review
+   Update Review
 ------------------------------------------ */
 export async function updateReview(reviewId: string, data: Partial<IReview>) {
     try {
@@ -127,7 +107,7 @@ export async function updateReview(reviewId: string, data: Partial<IReview>) {
 }
 
 /* -----------------------------------------
-   ✅ 5) Delete Review
+    Delete Review
 ------------------------------------------ */
 export async function deleteReview(reviewId: string) {
     try {

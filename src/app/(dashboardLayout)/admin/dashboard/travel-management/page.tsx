@@ -26,13 +26,13 @@ async function TravelPlanManagementContent({
 
     return (
         <div className="space-y-6">
-            {/* Header */}
+          
             <TravelPlanManagementHeader />
 
-            {/* Filters */}
+        
             <TravelPlansFilter />
 
-            {/* Table + Pagination */}
+           
             <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
                 <TravelPlansTable travelPlans={travelPlansResult?.data || []} />
                 <TablePagination

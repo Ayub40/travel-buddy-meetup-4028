@@ -5,7 +5,7 @@ export default function PricingPage() {
         const res = await fetch("/api/stripe/create-checkout-session", { method: "POST" });
         const data = await res.json();
         if (data.url) {
-            window.location.href = data.url; // Redirect to Stripe checkout
+            window.location.href = data.url; 
         }
     };
 

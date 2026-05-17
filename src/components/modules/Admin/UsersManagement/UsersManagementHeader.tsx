@@ -20,11 +20,11 @@ const UsersManagementHeader = () => {
         });
     };
 
-    //force remount to reset state of form
+   
     const [dialogKey, setDialogKey] = useState(0);
 
     const handleOpenDialog = () => {
-        setDialogKey((prev) => prev + 1); // Force remount
+        setDialogKey((prev) => prev + 1); 
         setIsDialogOpen(true);
     };
 

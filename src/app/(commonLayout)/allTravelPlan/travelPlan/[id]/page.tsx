@@ -33,7 +33,6 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
 
     return (
         <div className="min-h-screen bg-[#FAFBFC]">
-            {/* --- Hero Section --- */}
             <section className="relative pt-6 md:pt-10 pb-12 md:pb-20 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-[300px] md:h-[500px] bg-slate-900 -z-10">
                     <Image
@@ -44,7 +43,6 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
 
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="flex flex-col lg:flex-row gap-8 md:gap-12 items-center lg:items-end">
-                        {/* Main Image Container */}
                         <div className="w-full lg:w-7/12 group">
                             <div className="relative aspect-video lg:aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border-4 md:border-[6px] border-white/10 backdrop-blur-md">
                                 <Image
@@ -62,8 +60,6 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Quick Stats Grid */}
                         <div className="w-full lg:w-5/12 grid grid-cols-2 gap-3 md:gap-4">
                             {[
                                 { icon: <MapPin className="text-indigo-600" />, label: "Location", value: plan.destination },
@@ -84,9 +80,7 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
 
             <div className="container mx-auto px-4 md:px-6 pb-24">
                 <div className="grid lg:grid-cols-12 gap-10 md:gap-16">
-                    {/* --- Left Content --- */}
                     <div className="lg:col-span-8 space-y-12 md:space-y-20">
-                        {/* Description */}
                         <section>
                             <div className="flex items-center gap-4 mb-6 md:mb-8">
                                 <div className="h-px flex-1 bg-slate-200" />
@@ -101,7 +95,6 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                             </div>
                         </section>
 
-                        {/* Responsive Gallery */}
                         {plan.photos && plan.photos.length > 1 && (
                             <section>
                                 <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 md:mb-8 flex items-center gap-3">
@@ -117,7 +110,6 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                             </section>
                         )}
 
-                        {/* Reviews Section */}
                         <section className="bg-slate-50 p-6 md:p-10 rounded-3xl border border-slate-100">
                             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
                                 <div>
@@ -161,9 +153,8 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                         </section>
                     </div>
 
-                    {/* --- Right Sidebar --- */}
                     <div className="lg:col-span-4 space-y-6 md:space-y-8">
-                        {/* Booking Card */}
+
                         <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6 md:p-10 sticky top-24">
                             <div className="text-center mb-8">
                                 <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Total Budget</p>
@@ -192,7 +183,6 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                             </p>
                         </div>
 
-                        {/* Host Card */}
                         <div className="bg-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-2xl relative overflow-hidden group">
                             <div className="absolute -right-4 -bottom-4 text-white/5 transform group-hover:scale-110 transition-transform">
                                 <ShieldCheck size={140} />
@@ -212,7 +202,7 @@ const TravelPlanDetailsPage = async ({ params }: any) => {
                             <div className="mt-8 pt-8 border-t border-white/10">
                                 <button className="w-full flex items-center justify-between text-sm hover:text-indigo-300 transition-colors">
                                     <span>Inquiry via Email</span>
-                                    {/* <ArrowRight size={16} /> */}
+
                                 </button>
                                 <p className="text-slate-400 text-[10px] mt-2 font-mono break-all">{plan.user?.email}</p>
                             </div>

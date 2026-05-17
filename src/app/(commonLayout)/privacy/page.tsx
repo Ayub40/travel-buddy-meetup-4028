@@ -19,7 +19,6 @@ const PrivacyTermsPage = () => {
     const cardsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // GSAP Background Floating Animation
         gsap.to(".bg-blob", {
             duration: 12,
             x: "random(-100, 100)",
@@ -29,7 +28,6 @@ const PrivacyTermsPage = () => {
             ease: "sine.inOut",
         });
 
-        // GSAP Scroll Entrance for Cards
         const cards = cardsRef.current?.querySelectorAll(".legal-card");
         if (cards) {
             gsap.fromTo(cards,
@@ -98,11 +96,9 @@ const PrivacyTermsPage = () => {
     return (
         <div className="relative min-h-screen bg-white overflow-hidden font-sans">
 
-            {/* Animated Background Blobs */}
             <div className="bg-blob absolute top-0 -left-20 w-[500px] h-[500px] bg-purple-100/40 rounded-full blur-[120px]" />
             <div className="bg-blob absolute bottom-0 -right-20 w-[500px] h-[500px] bg-teal-50/50 rounded-full blur-[120px]" />
 
-            {/* --- HERO SECTION --- */}
             <section className="relative pt-2 pb-16">
                 <div className="container mx-auto px-6">
                     <motion.div
@@ -125,7 +121,6 @@ const PrivacyTermsPage = () => {
                 </div>
             </section>
 
-            {/* --- QUICK STATS / INFO --- */}
             <section className="py-12">
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -145,7 +140,6 @@ const PrivacyTermsPage = () => {
                 </div>
             </section>
 
-            {/* --- DETAILED POLICIES --- */}
             <section className="py-20 bg-[#fcfcff]">
                 <div className="container mx-auto px-6">
 
@@ -189,8 +183,6 @@ const PrivacyTermsPage = () => {
                 </div>
             </section>
 
-
-            {/* --- FAQ SECTION --- */}
             <section className="py-24 bg-white overflow-hidden">
                 <div className="container mx-auto px-6">
 

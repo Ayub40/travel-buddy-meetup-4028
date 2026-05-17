@@ -7,7 +7,7 @@ import SearchFilter from "@/components/shared/SearchFilter";
 const UsersFilter = () => {
     return (
         <div className="space-y-3">
-            {/* Row 1: Search and Refresh */}
+            {/* Search and Refresh */}
             <div className="flex items-center gap-3">
                 <SearchFilter paramName="searchTerm" placeholder="Search users..." />
                 <RefreshButton />

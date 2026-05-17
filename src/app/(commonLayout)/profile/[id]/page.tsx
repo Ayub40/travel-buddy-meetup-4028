@@ -30,10 +30,9 @@ export default function SingleProfile({ params }: { params: TParams }) {
     if (loading) return <div className="min-h-screen flex items-center justify-center font-bold text-[#9810FA]">Loading Adventure...</div>;
     if (!user) return notFound();
 
-    // Backend data logic
     const displayInterests = user.interests && user.interests.length > 0 
         ? user.interests 
-        : ["Hiking", "Photography", "Street Food", "Solo Travel"]; // Default interests
+        : ["Hiking", "Photography", "Street Food", "Solo Travel"]; 
 
     const displayBio = user.bio || "This traveler hasn't shared their story yet, but their next adventure is just around the corner!";
     const displayLocation = user.currentLocation || user.country || "Exploring the world";
@@ -99,7 +98,7 @@ export default function SingleProfile({ params }: { params: TParams }) {
 
                     <div className="grid md:grid-cols-3 gap-10">
                         <div className="md:col-span-2 space-y-10">
-                            {/* About Section */}
+                          
                             <section className="bg-orange-50/30 p-8 rounded-xl border border-orange-100/50">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="p-3 bg-orange-100 rounded-2xl text-orange-600">
@@ -112,7 +111,7 @@ export default function SingleProfile({ params }: { params: TParams }) {
                                 </p>
                             </section>
 
-                            {/* Interests (Dynamic from Backend) */}
+                          
                             <section>
                                 <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                                     Interests & Passion
@@ -131,7 +130,6 @@ export default function SingleProfile({ params }: { params: TParams }) {
                             </section>
                         </div>
 
-                        {/* Sidebar Info */}
                         <div className="space-y-8">
                             <motion.div 
                                 initial={{ opacity: 0, x: 20 }}
@@ -176,12 +174,6 @@ export default function SingleProfile({ params }: { params: TParams }) {
                                     </div>
                                 </div>
 
-                                {/* <motion.button 
-                                    whileTap={{ scale: 0.95 }}
-                                    className="w-full mt-10 bg-[#9810FA] text-white py-5 rounded-[1.5rem] font-black text-lg shadow-xl shadow-purple-200 hover:bg-[#7a0cc9] transition-all"
-                                >
-                                    Plan a Trip
-                                </motion.button> */}
                             </motion.div>
                         </div>
                     </div>

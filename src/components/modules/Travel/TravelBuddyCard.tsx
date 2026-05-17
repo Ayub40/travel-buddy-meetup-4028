@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-// --- Responsive Skeleton Component ---
+//  Responsive Skeleton Component 
 export const TravelBuddySkeleton = () => (
     <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-md overflow-hidden flex flex-col h-full animate-pulse">
         <div className="h-48 sm:h-64 w-full bg-gray-200 dark:bg-slate-800" />
@@ -67,7 +67,7 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="group bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full"
         >
-            {/* --- Image Section --- */}
+            {/*  Image Section  */}
             <div className="relative h-48 sm:h-64 w-full overflow-hidden">
                 <Image
                     src={plan.photos?.[0] || "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=800&auto=format&fit=crop"}
@@ -88,7 +88,7 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
                 </div>
             </div>
 
-            {/* --- Content Section --- */}
+            {/*  Content Section  */}
             <div className="p-5 sm:p-7 flex-grow flex flex-col">
                 <div className="mb-4 sm:mb-6">
                     <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-2 sm:mb-3 line-clamp-1 group-hover:text-blue-600 transition-colors">
@@ -148,7 +148,7 @@ export default function TravelBuddyCard({ plan }: TravelBuddyCardProps) {
                     </div>
                 </div>
 
-                {/* --- Action Buttons --- */}
+                {/*  Action Buttons  */}
                 <div className="mt-auto flex flex-col gap-2 sm:gap-3">
                     <Button
                         onClick={handleSendRequest}

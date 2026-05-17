@@ -18,7 +18,7 @@ export default function MyReviewsClient({ initialReviews }: MyReviewsClientProps
     const handleEdit = (review: any) => {
         setEditingReview(review);
         setFormData({ rating: review.rating, comment: review.comment || "" });
-        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleDelete = async (id: string) => {
@@ -55,7 +55,7 @@ export default function MyReviewsClient({ initialReviews }: MyReviewsClientProps
                 </div>
             </header>
 
-            {/* --- Edit Form Section --- */}
+            {/*  Edit Form Section  */}
             {editingReview && (
                 <div className="mb-8 bg-blue-50 border border-blue-100 rounded-2xl p-6 shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
                     <div className="flex justify-between items-center mb-4">
@@ -107,7 +107,7 @@ export default function MyReviewsClient({ initialReviews }: MyReviewsClientProps
                 </div>
             )}
 
-            {/* --- Reviews List --- */}
+            {/*  Reviews List  */}
             {reviews.length === 0 ? (
                 <div className="text-center py-20 bg-white rounded-3xl border border-dashed">
                     <MessageSquare size={48} className="mx-auto text-gray-200 mb-2" />

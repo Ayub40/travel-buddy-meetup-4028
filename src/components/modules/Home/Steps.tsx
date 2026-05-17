@@ -65,7 +65,7 @@ const Steps = () => {
     <section id="how-it-works" className="py-12 container mx-auto overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Title Section with Animation */}
+   
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +80,7 @@ const Steps = () => {
           </p>
         </motion.div>
 
-        {/* Steps Grid */}
+       
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
           {steps.map((step, index) => (
             <StepCard key={index} {...step} index={index} />

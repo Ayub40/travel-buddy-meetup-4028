@@ -87,7 +87,7 @@ async function ExploreContent({
             {travelers.length === 0 ? (
                 <EmptyState
                     onReset={() => {
-                        /* reset logic if needed */
+                       
                     }}
                 />
             ) : (

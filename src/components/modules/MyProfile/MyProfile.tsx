@@ -44,7 +44,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 
         const formData = new FormData(e.currentTarget);
 
-        // Create `data` JSON for complex fields
+
         const data: any = {
             name: formData.get("name"),
             bio: formData.get("bio"),

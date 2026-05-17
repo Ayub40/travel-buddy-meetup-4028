@@ -61,7 +61,6 @@ const FindTravelBuddy = () => {
         <div className="min-h-screen bg-gray-50/50 dark:bg-slate-950 pb-10 sm:pb-20">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 
-                {/* Header Section */}
                 <div className="pt-8 pb-6 sm:pt-16 sm:pb-10 text-center">
                     <motion.h1 
                         initial={{ opacity: 0, y: -10 }}
@@ -75,7 +74,6 @@ const FindTravelBuddy = () => {
                     </p>
                 </div>
 
-                {/* Filter Section (Make sure TravelBuddyFilter is responsive) */}
                 <TravelBuddyFilter
                     destination={destination} setDestination={setDestination}
                     country={country} setCountry={setCountry}
@@ -95,7 +93,6 @@ const FindTravelBuddy = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            // Responsive Grid: 1 col on mobile, 2 on tablet, 3 on desktop
                             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-10"
                         >
                             {Array.from({ length: 6 }).map((_, i) => (
@@ -126,7 +123,6 @@ const FindTravelBuddy = () => {
                                 ))}
                             </div>
 
-                            {/* Pagination Section */}
                             <div className="flex justify-center pt-6">
                                 <div className="bg-white dark:bg-slate-900 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 w-full sm:w-auto overflow-x-auto">
                                     <TablePagination

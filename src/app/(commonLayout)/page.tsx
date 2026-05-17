@@ -11,7 +11,6 @@ import { getAppStatistics } from "@/service/dashboard/dashboardManagement";
 import Head from "next/head";
 
 export default async function Home() {
-  // const statsResult = await getAppStatistics();
   const statsData = await getAppStatistics();
 
   return (

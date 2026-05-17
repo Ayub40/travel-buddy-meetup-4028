@@ -8,7 +8,6 @@ export default function ContactSection() {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 bg-white p-8 lg:p-16 rounded-3xl shadow-2xl border border-gray-100">
 
-                    {/* Left Side: Contact Info */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -39,8 +38,7 @@ export default function ContactSection() {
                             ))}
                         </div>
                     </motion.div>
-
-                    {/* Right Side: Quick Support Grid (Replacing the Form) */}
+                    
                     <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -88,14 +86,6 @@ export default function ContactSection() {
                                 <p className="text-sm text-gray-500 leading-snug">{card.desc}</p>
                             </div>
                         ))}
-
-                        {/* Bottom Full-width CTA */}
-                        {/* <div className="sm:col-span-2 mt-2 p-6 bg-gray-900 rounded-3xl text-center group cursor-pointer overflow-hidden relative">
-                            <div className="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                            <p className="relative z-10 text-white font-bold flex items-center justify-center gap-2">
-                                Still need help? Chat with an Agent <MessageCircle size={18} />
-                            </p>
-                        </div> */}
                     </motion.div>
 
                 </div>

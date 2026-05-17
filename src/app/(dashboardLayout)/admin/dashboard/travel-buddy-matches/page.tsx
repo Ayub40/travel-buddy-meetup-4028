@@ -5,7 +5,7 @@ import { getDashboardStats } from "@/service/admin/userManagement";
 import Image from "next/image";
 import { Users, MapPin, Briefcase } from "lucide-react";
 
-// --- Skeleton Loader Component ---
+
 const TableRowSkeleton = () => (
     <>
         {[1, 2, 3, 4, 5].map((i) => (
@@ -52,7 +52,7 @@ export default function TravelBuddyMatchesPage() {
 
     return (
         <div className="p-4 md:p-8 max-w-7xl mx-auto">
-            {/* Header Section */}
+            
             <header className="mb-8">
                 <h2 className="text-3xl font-extrabold text-gray-800 flex items-center gap-3">
                     <Users className="text-blue-600" size={32} /> Travel Buddy Matches

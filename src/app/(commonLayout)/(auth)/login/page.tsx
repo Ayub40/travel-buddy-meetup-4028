@@ -2,9 +2,6 @@ export const dynamic = "force-dynamic"
 import LoginForm from "@/components/login-form";
 import { Suspense } from "react";
 
-
-// export const dynamic = "force-dynamic";
-
 async function LoginContent({
   searchParams,
 }: {

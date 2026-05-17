@@ -36,12 +36,3 @@ export const createCheckoutSession = async () => {
 
     return session.url;
 };
-
-// export const PaymentService = {
-//     getMyPayments: async () => {
-//         const res = await serverFetch.get("/payments/me");
-//         const data = await res.json();
-//         if (!res.ok) throw new Error(data.message || "Failed to fetch payments");
-//         return data.data; // returns array of payments
-//     }
-// };

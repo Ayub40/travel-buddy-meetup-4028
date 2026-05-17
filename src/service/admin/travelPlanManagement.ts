@@ -41,7 +41,7 @@ export async function getTravelPlanById(id: string) {
 
 /** CREATE TRAVEL PLAN */
 export async function createTravelPlanAdmin(_prevState: any, formData: FormData) {
-    // ১️⃣ Build validation payload
+    //  Build validation payload
     const validationPayload = {
         title: formData.get("title") as string,
         destination: formData.get("destination") as string,
@@ -55,7 +55,7 @@ export async function createTravelPlanAdmin(_prevState: any, formData: FormData)
         photos: formData.getAll("photos") as File[],
     };
 
-    // ২️⃣ Validate with Zod
+    //  Validate with Zod
     const validatedPayload = zodValidator(validationPayload, createTravelPlanZodSchema);
 
     if (!validatedPayload.success && validatedPayload.errors) {
@@ -75,25 +75,6 @@ export async function createTravelPlanAdmin(_prevState: any, formData: FormData)
         };
     }
 
-    // ৩️⃣ Prepare backend payload
-    // const backendPayload = {
-    //     travelPlan: {
-    //         title: validatedPayload.data.title,
-    //         destination: validatedPayload.data.destination,
-    //         country: validatedPayload.data.country,
-    //         startDate: validatedPayload.data.startDate,
-    //         endDate: validatedPayload.data.endDate,
-    //         budget: validatedPayload.data.budget,
-    //         description: validatedPayload.data.description,
-    //         travelType: validatedPayload.data.travelType,
-    //         visibility: validatedPayload.data.visibility,
-    //     },
-    // };
-
-    // // ৪️⃣ FormData for files + JSON
-    // const newFormData = new FormData();
-    // newFormData.append("data", JSON.stringify(backendPayload));
-    // newFormData.append("file", formData.get("file") as Blob)
 
     // ======================================================
     const backendPayload = {
@@ -118,7 +99,7 @@ export async function createTravelPlanAdmin(_prevState: any, formData: FormData)
     photos.forEach(photo => newFormData.append("photos", photo));
     // ======================================================
 
-    // ৫️⃣ Send to backend
+    //  Send to backend
     try {
         const response = await serverFetch.post("/travel-plans", {
             body: newFormData,
@@ -126,7 +107,7 @@ export async function createTravelPlanAdmin(_prevState: any, formData: FormData)
 
         const result = await response.json();
 
-        // ৬️⃣ Revalidate tags (optional)
+        //  Revalidate tags (optional)
         if (result.success) {
             revalidateTag("travel-plans-list", { expire: 0 });
             revalidateTag("travel-plans-dashboard", { expire: 0 });
@@ -174,7 +155,7 @@ export async function updateTravelPlanAdmin(
         };
     }
 
-    // ✅ Backend payload
+    //  Backend payload
     const backendPayload = {
         travelPlan: {
             title: validationPayload.title,
@@ -192,7 +173,7 @@ export async function updateTravelPlanAdmin(
     const newFormData = new FormData();
     newFormData.append("travelPlan", JSON.stringify(backendPayload.travelPlan));
 
-    // ✅ photos append
+    //  photos append
     const photos = formData.getAll("photos") as File[];
     // photos.forEach(photo => newFormData.append("photos", photo));
     photos.forEach(photo => {
@@ -285,36 +266,3 @@ export async function sendJoinRequest(travelPlanId: string) {
         };
     }
 }
-
-
-
-// For Login User Get Travel Plan
-// export async function getMyTravelPlans() {
-//     try {
-//         const response = await serverFetch.get("/travel-plans/my-travel-plan");
-//         return await response.json();
-//     } catch (error: any) {
-//         console.error("Get my travel plans error:", error);
-//         return {
-//             success: false,
-//             message: process.env.NODE_ENV === "development" ? error.message : "Failed to fetch your travel plans",
-//             data: [],
-//         };
-//     }
-// }
-
-
-
-// export async function getAdmins(queryString?: string) {
-//     try {
-//         const response = await serverFetch.get(`/admin${queryString ? `?${queryString}` : ""}`);
-//         const result = await response.json();
-//         return result;
-//     } catch (error: any) {
-//         console.log(error);
-//         return {
-//             success: false,
-//             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
-//         };
-//     }
-// }

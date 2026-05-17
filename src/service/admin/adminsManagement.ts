@@ -114,22 +114,6 @@ export async function updateAdmin(id: string, _prevState: any, formData: FormDat
         contactNumber: formData.get("contactNumber") as string,
     };
 
-    /*
-    // Server-side validation
-        const validation = updateAdminZodSchema.safeParse(validationPayload);
-        if (!validation.success) {
-            const errors = validation.error.issues.map((err: any) => ({
-                field: err.path[0] as string,
-                message: err.message,
-            }));
-            return {
-                success: false,
-                message: "Validation failed",
-                formData: validationPayload,
-                errors,
-            };
-        }
-    */
 
     const validation = zodValidator(validationPayload, updateAdminZodSchema);
     if (!validation.success && validation.errors) {

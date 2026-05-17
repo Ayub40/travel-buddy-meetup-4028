@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Users, MapPin, Eye, XCircle, UserCircle } from "lucide-react";
 
-// --- Skeleton Component ---
+
 const TableRowSkeleton = () => (
     <>
         {[1, 2, 3, 4, 5].map((i) => (
@@ -142,7 +142,7 @@ export default function TravelBuddyMatchesPage() {
                 </div>
             </div>
 
-            {/* -------- Enhanced Modal -------- */}
+           
             <Dialog open={!!selectedMatch} onOpenChange={() => setSelectedMatch(null)}>
                 <DialogContent className="sm:max-w-md bg-white rounded-2xl p-0 overflow-hidden border-none shadow-2xl">
                     <div className="bg-blue-600 p-6 text-white text-center relative">

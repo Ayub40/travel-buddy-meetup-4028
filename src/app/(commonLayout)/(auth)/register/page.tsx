@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Suspense } from "react";
 
-// export const dynamic = "force-dynamic";
-
 async function RegisterContent() {
     return <RegisterForm />;
 }

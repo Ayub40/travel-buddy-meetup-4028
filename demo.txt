@@ -1,1 +1,2 @@
 # pnpm 
+src\app\(dashboardLayout) ==> porjonto update kora hoyche

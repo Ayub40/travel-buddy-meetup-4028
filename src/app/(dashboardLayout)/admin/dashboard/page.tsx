@@ -150,7 +150,7 @@ export default function AdminDashboardHome() {
     );
 }
 
-// Sub-component: Stat Card
+
 function StatCard({ title, value, icon, color, bgColor }: any) {
     return (
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 transition-all hover:scale-[1.02] hover:shadow-md cursor-default">
@@ -164,74 +164,3 @@ function StatCard({ title, value, icon, color, bgColor }: any) {
         </div>
     );
 }
-
-
-
-
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-
-// "use client";
-// import { getAdminAllStats } from "@/service/dashboard/dashboardManagement";
-// import { useEffect, useState } from "react";
-// import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-
-// export default function AdminDashboardHome() {
-//     const [stats, setStats] = useState<any>(null);
-//     const [loading, setLoading] = useState(true);
-
-//     useEffect(() => {
-//         const loadData = async () => {
-//             const res = await getAdminAllStats();
-//             if (res.success) setStats(res.data);
-//             setLoading(false);
-//         };
-//         loadData();
-//     }, []);
-
-//     if (loading) return <p className="text-center p-10">Loading Admin Dashboard...</p>;
-
-//     const chartData = [
-//         { name: 'Users', count: stats?.totalUsers },
-//         { name: 'Plans', count: stats?.totalTravelPlans },
-//         { name: 'Requests', count: stats?.totalJoinRequests },
-//         // { name: 'Payments', count: stats?.totalPayments },
-//     ];
-
-//     return (
-//         <div className="p-8 bg-gray-50 min-h-screen">
-//             <h1 className="text-2xl font-bold mb-6">Admin Overview</h1>
-
-//             {/* Overview Cards */}
-//             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
-//                 <StatCard title="Total Users" value={stats?.totalUsers} color="bg-blue-500" />
-//                 <StatCard title="Total Plans" value={stats?.totalTravelPlans} color="bg-green-500" />
-//                 <StatCard title="Join Requests" value={stats?.totalJoinRequests} color="bg-orange-500" />
-//                 {/* <StatCard title="Payments" value={stats?.totalPayments} color="bg-purple-500" /> */}
-//             </div>
-
-//             {/* Chart Section */}
-//             <div className="bg-white p-6 rounded-lg shadow-sm border h-80">
-//                 <h3 className="text-lg font-semibold mb-4">Platform Statistics</h3>
-//                 <ResponsiveContainer width="100%" height="100%">
-//                     <BarChart data={chartData}>
-//                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
-//                         <XAxis dataKey="name" />
-//                         <YAxis />
-//                         <Tooltip />
-//                         <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-//                     </BarChart>
-//                 </ResponsiveContainer>
-//             </div>
-//         </div>
-//     );
-// }
-
-// function StatCard({ title, value, color }: any) {
-//     return (
-//         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
-//             <span className="text-gray-500 text-sm font-medium">{title}</span>
-//             <span className={`text-4xl font-bold mt-2 ${color.replace('bg-', 'text-')}`}>{value}</span>
-//         </div>
-//     );
-// }
-

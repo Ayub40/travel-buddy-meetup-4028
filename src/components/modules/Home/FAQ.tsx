@@ -18,7 +18,7 @@ export default function FAQ() {
         <section className="py-24 container mx-auto px-6 overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                {/* Left Side: Accordion */}
+            
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -75,7 +75,7 @@ export default function FAQ() {
                     </div>
                 </motion.div>
 
-                {/* Right Side: Visual Content */}
+              
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ export default function FAQ() {
                     transition={{ duration: 0.6 }}
                     className="relative"
                 >
-                    {/* Decorative Background Shapes */}
+               
                     <div className="absolute -top-10 -right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
                     <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-pink-100 rounded-full blur-3xl opacity-50" />
 
@@ -96,7 +96,7 @@ export default function FAQ() {
                             className="rounded-xl w-full h-[500px] object-cover"
                         />
 
-                        {/* Floating Badge */}
+                    
                         <motion.div
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 3, repeat: Infinity }}

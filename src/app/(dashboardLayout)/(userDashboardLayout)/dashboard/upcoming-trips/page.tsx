@@ -4,7 +4,7 @@ import { getDashboardStats } from "@/service/admin/userManagement";
 import { useEffect, useState } from "react";
 import { Calendar, MapPin, PlaneTakeoff, Info } from "lucide-react";
 
-// --- Skeleton Component for Table Rows ---
+
 const TableRowSkeleton = () => (
     <>
         {[1, 2, 3, 4, 5].map((i) => (
@@ -43,7 +43,7 @@ export default function UpcomingTripsPage() {
 
     return (
         <div className="p-4 md:p-8 max-w-7xl mx-auto">
-            {/* Header Section */}
+        
             <div className="mb-8">
                 <h2 className="text-3xl font-extrabold text-gray-800 flex items-center gap-3">
                     <PlaneTakeoff className="text-blue-600" size={32} /> Upcoming Trips
